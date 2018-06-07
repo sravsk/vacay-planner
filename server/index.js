@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('client-sessions');
-const bcrypt = require('bcrypt-nodejs')
-
+const bcrypt = require('bcrypt-nodejs');
+const path = require('path');
 
 const db = require('../database');
 const tm = require('../helpers/tm');
@@ -188,6 +188,13 @@ app.post('/signup', (req, res) => {
     })
   })
 })
+
+// default protected route handled by react-router
+app.get('*', function(req, res) {
+  if (req.session.user !== null) {
+    res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
+  }
+});
 
 app.post('/logout', (req, res) => {
   req.session.reset();
