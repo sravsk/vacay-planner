@@ -4,9 +4,9 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 function LocationSearchInput(props) {
     return (
       <PlacesAutocomplete
-        value={props.address}
-        onSelect={props.handleSelect}
-        onChange={props.handleLocationChange}
+        value={props.loc}
+        onSelect={props.handleLocSelect}
+        onChange={props.handleLocChange}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <div>
