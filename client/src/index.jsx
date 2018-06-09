@@ -92,8 +92,9 @@ class App extends React.Component {
     geocodeByAddress(location)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        console.log('Success', latLng)
+        // console.log('Success', latLng)
         this.setState({
+          loc: location,
           latLng: latLng
         })
       })

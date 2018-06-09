@@ -15,11 +15,13 @@ class MyTripsPageBody extends React.Component {
       allTrips: [],
       eventsSelected: [],
       restaurantsSelected: [],
-      activeIndex: null
-    }
+      activeIndex: null,
+      loc: '',
+      latLng: {}
+    };
     this.updateSelection = this.updateSelection.bind(this);
   }
-  
+
   componentDidMount() {
     this.getAllTrips()
     this.updateSelection(this.state.selectedTrip);
@@ -29,9 +31,8 @@ class MyTripsPageBody extends React.Component {
     const { index } = titleProps
     const { activeIndex } = this.state
     const newIndex = activeIndex === index ? -1 : index
-
-    this.setState({ 
-      activeIndex: newIndex 
+    this.setState({
+      activeIndex: newIndex
     })
     this.updateSelection(this.state.selectedTrip)
   }
@@ -50,10 +51,31 @@ class MyTripsPageBody extends React.Component {
       type: 'GET',
       url: `/trips/${tripId}`,
       success: result => {
+        var data = JSON.parse(result)
+        // console.log(JSON.parse(result))
         this.setState({
-          eventsSelected: JSON.parse(result).events,
-          restaurantsSelected: JSON.parse(result).restaurants
+          eventsSelected: data.events,
+          restaurantsSelected: data.restaurants,
+          loc: data.loc,
+          latLng: JSON.parse(data.latLng)
         })
+        // render trip location on map
+        var latLng = JSON.parse(data.latLng);
+        // if map container is already initialized, remove map
+        if (this.mymap) {
+          this.mymap.eachLayer(function(layer) {
+            layer.remove();
+          });
+          this.mymap.remove();
+          this.mymap = null;
+        }
+        this.mymap = L.map('map').setView([latLng.lat, latLng.lng], 13);
+        L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${require('./../../../../config.js').MAPBOX_TOKEN}`, {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox.streets',
+          accessToken: 'your.mapbox.access.token'
+        }).addTo(this.mymap);
       }
     })
   }
@@ -78,7 +100,7 @@ class MyTripsPageBody extends React.Component {
   render() {
     const {activeIndex} = this.state
     return (
-      <div> 
+      <div>
         <Grid columns='equal' style={ { marginTop: 50, backgroundColor: 'white'} }>
           <Grid.Column floated='left' width={3}>
             <SelectTrip
@@ -90,6 +112,7 @@ class MyTripsPageBody extends React.Component {
           {this.state.allTrips.length ?
             (
               <Grid.Column floated='right' width={13}>
+              <div id="map"></div>
                 <Accordion fluid styled>
                   <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
@@ -109,8 +132,8 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>
-            ) 
-          : 
+            )
+          :
             (<span style={ {color: '#d0021b', fontSize: 30, align: 'center', marginRight: 450, marginTop: 50} }> No Saved Trips </span>)}
         </Grid>
       </div>
