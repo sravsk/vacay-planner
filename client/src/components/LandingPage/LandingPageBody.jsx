@@ -18,9 +18,10 @@ const LandingPageBody = (props) => (
 
               <Segment stacked>
                 City, State:<br />
-                <LocationSearchInput handleChange={props.handleChange} 
-                  handleSelect={props.handleSelect} address={props.address}
-                  handleLocationChange={props.handleLocationChange}
+                <LocationSearchInput
+                  loc={props.loc}
+                  handleLocSelect={props.handleLocSelect}
+                  handleLocChange={props.handleLocChange}
                 />
                 <br /><br />
                 Start Date:<br />

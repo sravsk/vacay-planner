@@ -17,20 +17,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: null,
-      location: '',
+      loc: '',
+      latLng: {},
       startDate: new Date(),
-      endDate: new Date(),
-      address: '' 
+      endDate: new Date()
     };
     this.loginUser = this.loginUser.bind(this);
     this.signUpUser = this.signUpUser.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleLocChange = this.handleLocChange.bind(this);
+    this.handleLocSelect = this.handleLocSelect.bind(this)
     this.handleStartDayChange = this.handleStartDayChange.bind(this);
     this.handleEndDayChange = this.handleEndDayChange.bind(this);
-    this.handleLogout = this.handleLogout.bind(this)
+    this.handleLogout = this.handleLogout.bind(this);
   }
-
-  //write functions
 
   loginUser(email, password, history) {
     console.log('email: ', email);
@@ -70,10 +69,9 @@ class App extends React.Component {
     })
   }
 
-  handleLocationChange(e) {
+  handleLocChange(e) {
     this.setState({
-      location: e,
-      address: e
+      loc: e
     })
   }
 
@@ -90,10 +88,15 @@ class App extends React.Component {
     this.setState({user: null})
   }
 
-  handleSelect(location) {
+  handleLocSelect(location) {
     geocodeByAddress(location)
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(latLng => {
+        console.log('Success', latLng)
+        this.setState({
+          latLng: latLng
+        })
+      })
       .catch(error => console.error('Error', error))
   }
 
@@ -103,9 +106,15 @@ class App extends React.Component {
         <div className='container'>
           <Route exact path='/' render={(props) => {
             return (
-              <LandingPage handleLocationChange={this.handleLocationChange} handleStartDayChange={this.handleStartDayChange} 
-                handleEndDayChange={this.handleEndDayChange} user={this.state.user} handleLogout={this.handleLogout}{...props} 
-                handleChange={this.handleChange} handleSelect={this.handleSelect} address={this.state.address}
+              <LandingPage
+                handleStartDayChange={this.handleStartDayChange}
+                handleEndDayChange={this.handleEndDayChange}
+                handleLogout={this.handleLogout}
+                handleLocChange={this.handleLocChange}
+                handleLocSelect={this.handleLocSelect}
+                user={this.state.user}
+                loc={this.state.loc}
+                {...props}
               />
             )} }/>
           <Route path='/login' render={(props) => {
@@ -118,7 +127,15 @@ class App extends React.Component {
             )} }/>
           <Route path='/foodandevents' render={(props) => {
             return (
-              <FoodAndEventsPage inputLocation={this.state.location} startDate={this.state.startDate} endDate={this.state.endDate} user={this.state.user} handleLogout={this.handleLogout} {...props} />
+              <FoodAndEventsPage
+                startDate={this.state.startDate}
+                endDate={this.state.endDate}
+                user={this.state.user}
+                inputLocation={this.state.loc}
+                latLng={this.state.latLng}
+                handleLogout={this.handleLogout}
+                {...props}
+              />
             )} }/>
           <Route path='/mytrips' render={(props) => {
             return (
