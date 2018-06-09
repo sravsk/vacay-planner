@@ -61,6 +61,14 @@ class MyTripsPageBody extends React.Component {
         })
         // render trip location on map
         var latLng = JSON.parse(data.latLng);
+        // if map container is already initialized, remove map
+        if (this.mymap) {
+          this.mymap.eachLayer(function(layer) {
+            layer.remove();
+          });
+          this.mymap.remove();
+          this.mymap = null;
+        }
         this.mymap = L.map('map').setView([latLng.lat, latLng.lng], 13);
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1lbmEiLCJhIjoiY2ppNmd3cHA4MDBwYzN2cDN1eGlzaWg1eCJ9.paiNLoRiwSNXMPF8qWvSEA', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
