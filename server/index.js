@@ -109,34 +109,9 @@ app.get('/trips/:id', (req, res) => {
 });
 
 app.post('/trips', (req, res) => {
-
-  /*
-    sampleObject = {
-      trip: {
-        startDate: date,
-        endDate: date,
-        name: string
-      },
-      eventList: [
-        {ticketmaster event},
-        {ticketmaster event},
-        ...
-      ],
-      restaurantList: [
-        {yelp restaurant},
-        {yelp restaurant},
-        ...
-      ]
-    }
-  */
-
   if (req.session.user){
-    // db.newTrip(req.body)
-    // res.status(200).end('successfully added trip')
-
     db.newTrip(req.session.user, req.body)
     res.status(200).end('successfully added trip')
-
   } else {
     res.status(500).end('error')
   }

@@ -18,6 +18,7 @@ class App extends React.Component {
     this.state = {
       user: null,
       loc: '',
+      latLng: {},
       startDate: new Date(),
       endDate: new Date()
     };
@@ -90,7 +91,12 @@ class App extends React.Component {
   handleLocSelect(location) {
     geocodeByAddress(location)
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(latLng => {
+        console.log('Success', latLng)
+        this.setState({
+          latLng: latLng
+        })
+      })
       .catch(error => console.error('Error', error))
   }
 
@@ -122,10 +128,11 @@ class App extends React.Component {
           <Route path='/foodandevents' render={(props) => {
             return (
               <FoodAndEventsPage
-                inputLocation={this.state.location}
                 startDate={this.state.startDate}
                 endDate={this.state.endDate}
                 user={this.state.user}
+                inputLocation={this.state.loc}
+                latLng={this.state.latLng}
                 handleLogout={this.handleLogout}
                 {...props}
               />

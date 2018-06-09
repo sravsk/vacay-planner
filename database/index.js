@@ -43,7 +43,9 @@ const Trip = db.define('trips', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   start_date: Sequelize.DATE,
   end_date: Sequelize.DATE,
-  tripName: {type: Sequelize.STRING, allowNull: false}
+  tripName: {type: Sequelize.STRING, allowNull: false, unique: true},
+  loc: Sequelize.STRING,
+  latLng: Sequelize.STRING
 })
 
 var Restaurant = db.define('restaurants', {
@@ -175,17 +177,15 @@ var dbHelpers = {
   // and save all associated Events
   // & Restaurants to the Database
   newTrip: (email, obj) => {
-
     User.findOne({where: {email: email}}).then(user => {
-
-
       //create the Trip
       user.createTrip({
         start_date: obj.trip.startDate,
         end_date: obj.trip.endDate,
-        tripName: obj.trip.name
+        tripName: obj.trip.name,
+        loc: obj.trip.loc,
+        latLng: JSON.stringify(obj.trip.latLng)
       }).then(trip => {
-
         //create the Events if they exist
         if (obj.eventList !== undefined) {
           obj.eventList.forEach(event => {
@@ -203,9 +203,7 @@ var dbHelpers = {
             tempEvent.setTrip(trip, {save: false});
             tempEvent.save();
           })
-
         }
-
         //create the Restaurants if they exist
         if (obj.restaurantList !== undefined) {
           obj.restaurantList.forEach(restaurant => {
@@ -225,7 +223,6 @@ var dbHelpers = {
             tempRest.setTrip(trip, {save: false});
             tempRest.save();
           })
-
         }
       })
     })

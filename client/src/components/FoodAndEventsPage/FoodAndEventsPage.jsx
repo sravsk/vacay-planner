@@ -45,22 +45,23 @@ class FoodAndEventsPage extends React.Component {
 
   saveTrip() {
     var data = {
-      user: {email: 'ted.green@test.com'},
+      user:  {email: 'ted.green@test.com'},
       trip: {
         start_date: this.props.startDate,
         end_date: this.props.endDate,
-        name: this.state.tripName
+        name: this.state.tripName,
+        loc: this.props.inputLocation,
+        latLng: this.props.latLng
       },
       eventList: this.state.eventFavorites,
       restaurantList: this.state.foodFavorites
     };
-    console.log(data)
     $.ajax({
       method: 'POST',
       url: '/trips',
       data: data,
       success: (data) => {
-        console.log(data);
+        console.log('trip saved');
       },
       error: (err) => {console.log(err)},
       dataType: 'json'
