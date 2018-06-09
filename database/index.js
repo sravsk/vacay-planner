@@ -154,16 +154,17 @@ var dbHelpers = {
   },
 
   // This will get all trip items
-  // (Events & Restaurants) when
-  // given a Trip ID, which you can technically
-  // only get when passing a
+  // (Events & Restaurants, location, latLng) when
+  // given a Trip ID
   getTripItems: (tripId, cb) => {
     Trip.findOne({where: {id: tripId}}).then(trip => {
+
       output = {
+        loc: trip.loc,
+        latLng: trip.latLng,
         events: [],
         restaurants: []
       }
-
       trip.getEvents()
       .then(tripEvents => output.events = tripEvents)
       .then(() => {trip.getRestaurants()
