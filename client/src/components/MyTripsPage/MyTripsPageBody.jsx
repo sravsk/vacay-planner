@@ -70,7 +70,7 @@ class MyTripsPageBody extends React.Component {
           this.mymap = null;
         }
         this.mymap = L.map('map').setView([latLng.lat, latLng.lng], 13);
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYW1lbmEiLCJhIjoiY2ppNmd3cHA4MDBwYzN2cDN1eGlzaWg1eCJ9.paiNLoRiwSNXMPF8qWvSEA', {
+        L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${require('./../../../../config.js').MAPBOX_TOKEN}`, {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 18,
           id: 'mapbox.streets',
