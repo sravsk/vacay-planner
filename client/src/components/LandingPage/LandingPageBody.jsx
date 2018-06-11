@@ -5,9 +5,9 @@ import MomentLocaleUtils, {formatDate, parseDate} from 'react-day-picker/moment'
 import LocationSearchInput from './LocationSearchInput.jsx';
 
 const LandingPageBody = (props) => (
-  <Grid verticalAlign='middle' style={ {marginTop: 50} }>
+  <Grid className="ui centered" style={ {marginTop: 50} }>
     <Grid.Row>
-      <Grid.Column style={{ maxWidth: 450}}>
+      <Grid.Column centered style={{ maxWidth: 450}}>
         <Card centered fluid>
           <Card.Content header='Vacation Planner' />
           <Card.Content extra>
