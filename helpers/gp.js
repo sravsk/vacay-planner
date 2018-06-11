@@ -4,13 +4,12 @@ const request = require('request');
 const key = config.GP_KEY;
 
 module.exports = {
-  getPOI: (location, callback) => {
-    const encodedURI = encodeURI(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&key=${key}`)
-    request.get({
-      method: 'GET',
-      uri: encodedURI,
-      json: true
+  getPOI: (lng, lat, callback) => {
+    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lng},${lat}&radius=1600&key=${key}`;
+    request.get(url, (err, res, body) => {
+      err ? console.log(err) : callback(body);
     })
-    .then((data) => callback(data))
   }
 }
+
+//-33.8670522,151.1957362

@@ -7,6 +7,7 @@ const path = require('path');
 const db = require('../database');
 const tm = require('../helpers/tm');
 const yelp = require('../helpers/yelp');
+const gp = require('..helpers/gp');
 
 const app = express();
 const PORT = 3000;
@@ -86,6 +87,13 @@ app.get('/events', (req, res) => {
   tm(options, (data) => res.status(200).end(JSON.stringify(data)));
 
 });
+
+app.get('/poi', (req, res) => {
+  gp.getPOI('-33.8670522','151.1957362', (data) => {
+    console.log(JSON.parse(data));
+    res.send(JSON.parse(data));
+  })
+})
 
 // Get restaurants from Yelp API
 app.get('/restaurants/:location', (req, res) => {
