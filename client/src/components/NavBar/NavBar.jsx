@@ -33,6 +33,11 @@ const NavBar = (props) => {
           </NavLink>
         </Menu.Item>
         <Menu.Item position="right">
+          <NavLink to='/' activeClassName='active'>
+            Hello, <span>{props.user.split("@")[0]}</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
           <NavLink to='/mytrips' activeClassName='active'>
             My Trips
           </NavLink>
