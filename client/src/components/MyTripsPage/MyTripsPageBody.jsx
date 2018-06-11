@@ -59,8 +59,6 @@ class MyTripsPageBody extends React.Component {
           loc: data.loc,
           latLng: JSON.parse(data.latLng)
         })
-        // render trip location on map
-        var latLng = JSON.parse(data.latLng);
         // if map container is already initialized, remove map
         if (this.mymap) {
           this.mymap.eachLayer(function(layer) {
@@ -69,6 +67,8 @@ class MyTripsPageBody extends React.Component {
           this.mymap.remove();
           this.mymap = null;
         }
+        // render trip location on map
+        var latLng = JSON.parse(data.latLng);
         this.mymap = L.map('map').setView([latLng.lat, latLng.lng], 13);
         L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${require('./../../../../config.js').MAPBOX_TOKEN}`, {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -76,6 +76,12 @@ class MyTripsPageBody extends React.Component {
           id: 'mapbox.streets',
           accessToken: 'your.mapbox.access.token'
         }).addTo(this.mymap);
+        var restaurantsSelected = data.restaurants;
+        // for each restaurant, add a marker
+        restaurantsSelected.forEach(restaurant => {
+          console.log('marker added for', restaurant.restLat, restaurant.restLong)
+          L.marker([restaurant.restLat, restaurant.restLong]).addTo(this.mymap);
+        })
       }
     })
   }
