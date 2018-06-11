@@ -181,8 +181,8 @@ var dbHelpers = {
     User.findOne({where: {email: email}}).then(user => {
       //create the Trip
       user.createTrip({
-        start_date: obj.trip.startDate,
-        end_date: obj.trip.endDate,
+        start_date: obj.trip.start_date,
+        end_date: obj.trip.end_date,
         tripName: obj.trip.name,
         loc: obj.trip.loc,
         latLng: JSON.stringify(obj.trip.latLng)
@@ -208,7 +208,7 @@ var dbHelpers = {
         //create the Restaurants if they exist
         if (obj.restaurantList !== undefined) {
           obj.restaurantList.forEach(restaurant => {
-            console.log(Restaurant)
+            console.log("Restaurant", Restaurant)
             var tempRest = Restaurant.build({
               name: restaurant.name,
               yelpURL: restaurant.url,
