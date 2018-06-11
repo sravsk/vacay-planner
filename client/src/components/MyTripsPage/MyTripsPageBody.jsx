@@ -76,12 +76,15 @@ class MyTripsPageBody extends React.Component {
           id: 'mapbox.streets',
           accessToken: 'your.mapbox.access.token'
         }).addTo(this.mymap);
-        var restaurantsSelected = data.restaurants;
-        // for each restaurant, add a marker
-        restaurantsSelected.forEach(restaurant => {
-          console.log('marker added for', restaurant.restLat, restaurant.restLong)
+
+        // Add a marker for each restaurant
+        data.restaurants.forEach(restaurant => {
           L.marker([restaurant.restLat, restaurant.restLong]).addTo(this.mymap);
-        })
+        });
+        // Add a marker for each event
+        data.events.forEach(event => {
+          L.marker([event.venueLat, event.venueLong]).addTo(this.mymap);
+        });
       }
     })
   }
