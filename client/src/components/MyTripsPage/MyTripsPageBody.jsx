@@ -5,6 +5,7 @@ import { Grid, Accordion, Icon } from 'semantic-ui-react';
 import SelectTrip from './SelectTrip.jsx';
 import EventsList from './EventsList.jsx';
 import RestaurantsList from './RestaurantsList.jsx';
+import MyTripPageHeader from './MyTripPageHeader.jsx';
 import $ from 'jquery';
 
 class MyTripsPageBody extends React.Component {
@@ -120,7 +121,7 @@ class MyTripsPageBody extends React.Component {
           {this.state.allTrips.length ?
             (
               <Grid.Column floated='right' width={13}>
-              <div id="map"></div>
+              <MyTripPageHeader allTrips = {this.state.allTrips} selectedTrip = {this.state.selectedTrip}/>
                 <Accordion fluid styled>
                   <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
@@ -139,6 +140,7 @@ class MyTripsPageBody extends React.Component {
                     {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected}/>}
                   </Accordion.Content>
                 </Accordion>
+                <div id="map"></div>
               </Grid.Column>
             )
           :
