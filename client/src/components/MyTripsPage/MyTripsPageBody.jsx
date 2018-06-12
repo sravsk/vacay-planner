@@ -68,7 +68,9 @@ class MyTripsPageBody extends React.Component {
         }
         // render trip location on map
         var latLng = JSON.parse(data.latLng);
+        // instantiate leaflet map
         this.mymap = L.map('map').setView([latLng.lat, latLng.lng], 13);
+        // add tile layer
         L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=${require('./../../../../config.js').MAPBOX_TOKEN}`, {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 18,
@@ -78,11 +80,13 @@ class MyTripsPageBody extends React.Component {
 
         // Add a marker for each restaurant
         data.restaurants.forEach(restaurant => {
-          L.marker([restaurant.restLat, restaurant.restLong]).addTo(this.mymap);
+          L.marker([restaurant.restLat, restaurant.restLong]).addTo(this.mymap)
+            .bindPopup(restaurant.name);
         });
         // Add a marker for each event
         data.events.forEach(event => {
-          L.marker([event.venueLat, event.venueLong]).addTo(this.mymap);
+          L.marker([event.venueLat, event.venueLong]).addTo(this.mymap)
+            .bindPopup(`${event.name} at ${event.venueName}`);
         });
       }
     })
