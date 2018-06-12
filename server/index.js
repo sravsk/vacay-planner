@@ -7,7 +7,7 @@ const path = require('path');
 const db = require('../database');
 const tm = require('../helpers/tm');
 const yelp = require('../helpers/yelp');
-const gp = require('..helpers/gp');
+const gp = require('../helpers/gp');
 
 const app = express();
 const PORT = 3000;
@@ -91,7 +91,7 @@ app.get('/events', (req, res) => {
 app.get('/poi', (req, res) => {
   gp.getPOI('-33.8670522','151.1957362', (data) => {
     console.log(JSON.parse(data));
-    res.send(JSON.parse(data));
+    res.send(data);
   })
 })
 
