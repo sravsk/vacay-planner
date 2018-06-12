@@ -229,6 +229,23 @@ var dbHelpers = {
     })
   },
 
+  //this will delete a trip by id and pass the remaining trips to server
+  deleteTripID: (tripId, cb) => {
+    console.log("trip id", tripId)
+    Trip.findOne({where: {id: tripId}}).then(trip => {
+      return  trip.destroy({
+        where : {
+          id : tripId
+        }
+      })
+    }).then(deletedTrip => {
+      return Trip.findAll();
+    }).then(trips => {
+      cb(trips);
+    })
+  },
+
+
   //////////////////////////////////////////////////////////
   //                 Test data use Only                   //
   //////////////////////////////////////////////////////////

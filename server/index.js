@@ -117,6 +117,10 @@ app.post('/trips', (req, res) => {
   }
 })
 
+app.delete('/trips/:id', (req, res) => {
+  db.deleteTripID(req.params.id, (obj) => res.status(200).end(JSON.stringify(obj)));
+})
+
 app.post('/login', (req, res) => {
   let email = req.body.email;
   let enteredPassword = req.body.password;
