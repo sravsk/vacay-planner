@@ -90,8 +90,7 @@ app.get('/events', (req, res) => {
 
 app.get('/poi', (req, res) => {
   gp.getPOI('-33.8670522','151.1957362', (data) => {
-    console.log(JSON.parse(data));
-    res.send(data);
+    res.status(200).send(JSON.parse(data));
   })
 })
 
