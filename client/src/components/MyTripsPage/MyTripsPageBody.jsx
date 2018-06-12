@@ -23,8 +23,7 @@ class MyTripsPageBody extends React.Component {
   }
 
   componentDidMount() {
-    this.getAllTrips()
-    this.updateSelection(this.state.selectedTrip);
+    this.getAllTrips();
   }
 
   handleClick(e, titleProps) {
@@ -94,14 +93,14 @@ class MyTripsPageBody extends React.Component {
       type: 'GET',
       url: `/trips`,
       success: result => {
-        JSON.parse(result).length ?
-          (
-            this.setState({
-              selectedTrip: JSON.parse(result)[0].id,
-              allTrips: JSON.parse(result)
+        var data = JSON.parse(result);
+        if (data.length) {
+          this.setState({
+              selectedTrip: data[0].id,
+              allTrips: data
             })
-          )
-          : ''
+          this.updateSelection(this.state.selectedTrip);
+        }
       }
     })
   }
