@@ -78,16 +78,28 @@ class MyTripsPageBody extends React.Component {
           accessToken: 'your.mapbox.access.token'
         }).addTo(this.mymap);
 
+        // marker for restaurants
+        var restaurantMarker = L.AwesomeMarkers.icon({
+          icon: 'cutlery',
+          markerColor: 'red'
+        });
         // Add a marker for each restaurant
         data.restaurants.forEach(restaurant => {
-          L.marker([restaurant.restLat, restaurant.restLong]).addTo(this.mymap)
+          L.marker([restaurant.restLat, restaurant.restLong], {icon: restaurantMarker}).addTo(this.mymap)
             .bindPopup(restaurant.name);
+        });
+
+        // marker for events
+        var eventMarker = L.AwesomeMarkers.icon({
+          icon: 'info-sign',
+          markerColor: 'green'
         });
         // Add a marker for each event
         data.events.forEach(event => {
-          L.marker([event.venueLat, event.venueLong]).addTo(this.mymap)
+          L.marker([event.venueLat, event.venueLong], {icon: eventMarker}).addTo(this.mymap)
             .bindPopup(`${event.name} at ${event.venueName}`);
         });
+
       }
     })
   }

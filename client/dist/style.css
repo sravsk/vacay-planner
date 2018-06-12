@@ -24,7 +24,13 @@ ul {
 }
 
 #map {
-  height: 300%;
-  width: 90%;
-  margin: 50px;
+/*  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 80vh;
+  margin: 10vh;*/
+  height: 75vh;
+  width: 75vw;
 }
