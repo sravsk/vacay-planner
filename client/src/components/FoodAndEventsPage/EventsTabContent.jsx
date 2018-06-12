@@ -21,10 +21,10 @@ const EventsTabContent = (props) => (
                 </Item.Header>
                 <Item.Description>
                   <strong>{event._embedded.venues[0].name}</strong>
-                  {`,                    
-                  ${event._embedded.venues[0].address.line1}, 
+                  {`,
+                  ${event._embedded.venues[0].address.line1},
                   ${event._embedded.venues[0].city.name},
-                  ${event._embedded.venues[0].state.stateCode}  
+                  ${event._embedded.venues[0].state.stateCode}
                   ${event._embedded.venues[0].postalCode}`
                   }
                 </Item.Description>
@@ -34,7 +34,7 @@ const EventsTabContent = (props) => (
                   >
                     {moment(event.dates.start.dateTime).format('MMM DD ddd')}
                   </Label>
-                  < SaveButton
+                  <SaveButton
                     toggleFavorite={() => props.toggleFavorite(index, 'events')}
                     isSaved={props.eventFavorites.find(eventfav => eventfav.id === event.id) ? true : false}
                   />
