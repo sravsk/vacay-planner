@@ -26,7 +26,7 @@ const FoodAndEventsSidebar = (props) => {
           {props.foodFavorites.length + props.eventFavorites.length === 0 ? '' : (
             <div>
               {
-                props.user !== null ? <Button onClick={props.saveTrip} content='Save to My Trips' fluid />
+                props.user !== undefined ? <Button onClick={props.saveTrip} content='Save to My Trips' fluid />
                 :
                 <div>
                   <Button onClick={() => {props.history.push('/login')}} color='blue' fluid content='Login to Save' />
