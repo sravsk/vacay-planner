@@ -1,7 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 import ListAllEvents from './ListAllEvents.jsx';
-import FoodAndEventsPage from '../FoodAndEventsPage/FoodAndEventsPage.jsx';
 import {Button} from 'semantic-ui-react';
 
 class AddNewEvents extends React.Component {
