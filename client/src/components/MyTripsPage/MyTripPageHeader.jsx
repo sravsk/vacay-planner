@@ -16,7 +16,7 @@ class MyTripPageHeader extends React.Component{
     this.handleTripDelete = this.handleTripDelete.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-     this.handleOpenRestaurant = this.handleOpenRestaurant.bind(this);
+    this.handleOpenRestaurant = this.handleOpenRestaurant.bind(this);
     this.handleCloseRestaurant = this.handleCloseRestaurant.bind(this);
   }
 
@@ -43,8 +43,6 @@ class MyTripPageHeader extends React.Component{
       modalOpenRestaurant : false
     })
   }
-
-
 
   handleTripDelete(){
     var tripId = this.props.selectedTrip;
