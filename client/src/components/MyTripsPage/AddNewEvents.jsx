@@ -7,12 +7,9 @@ import {Button} from 'semantic-ui-react';
 class AddNewEvents extends React.Component {
   constructor(props){
     super(props)
-    console.log("props in AddNewEvents", props)
     this.state = {
       eventsList : [],
-      eventFavorites: [],
-      open : this.props.open,
-      modelOpen : false
+      eventFavorites: []
     }
 
     this.toggleFavorite = this.toggleFavorite.bind(this);

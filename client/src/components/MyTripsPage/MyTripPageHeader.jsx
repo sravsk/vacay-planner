@@ -71,7 +71,7 @@ class MyTripPageHeader extends React.Component{
                         size='small'
                         >
                           <Modal.Content>
-                            <AddNewEvents startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} open={this.state.modalOpen}onClose={this.handleClose} />
+                            <AddNewEvents startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} />
                              <Button color='blue' onClick={this.handleClose} inverted>
                               Close
                               </Button>
@@ -79,7 +79,7 @@ class MyTripPageHeader extends React.Component{
                         </Modal>
                       </Grid.Column>
                       <Grid.Column width={3}>
-                      <Modal
+                        <Modal
                         trigger={<Button onClick={this.handleOpen} color="blue">Add Restaurants</Button>}
                         open={this.state.modalOpen}
                         onClose={this.handleClose}
@@ -108,3 +108,7 @@ class MyTripPageHeader extends React.Component{
 }
 
 export default MyTripPageHeader;
+
+
+
+
