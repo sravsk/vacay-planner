@@ -14,6 +14,8 @@ class FoodAndEventsPage extends React.Component {
       eventsList: [],
       foodFavorites: [],
       eventFavorites: [],
+      poiList: [],
+      poiFavorites: [],
       tripName: ""
     };
     this.toggleFavorite = this.toggleFavorite.bind(this);
@@ -76,6 +78,22 @@ class FoodAndEventsPage extends React.Component {
   componentDidMount() {
     this.getRestaurantsByLocation();
     this.getEventsByLocationAndDate();
+    this.getPOIByLocation();
+  }
+
+  getPOIByLocation() {
+    $.ajax({
+      type: 'GET',
+      url: '/poi',
+      data: {
+        latLng: this.props.latLng
+      },
+      success: result => {
+        this.setState({
+          poiList: result.results
+        })
+      }
+    })
   }
 
   getRestaurantsByLocation() {
@@ -124,8 +142,10 @@ class FoodAndEventsPage extends React.Component {
             <FoodAndEventsPageBody
               restaurantList={this.state.restaurantList}
               eventsList={this.state.eventsList}
+              poiList={this.state.poiList}
               foodFavorites={this.state.foodFavorites}
               eventFavorites={this.state.eventFavorites}
+              poiFavorites={this.state.poiFavorites}
               toggleFavorite={this.toggleFavorite}
             />
           </Grid.Column>
@@ -134,6 +154,7 @@ class FoodAndEventsPage extends React.Component {
               user={this.props.user}
               foodFavorites={this.state.foodFavorites}
               eventFavorites={this.state.eventFavorites}
+              poiFavorites={this.state.poiFavorites}
               saveTrip={this.saveTrip}
               tripName={this.state.tripName}
               onNameChange={this.handleNameChange}
