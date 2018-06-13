@@ -176,16 +176,25 @@ app.post('/signup', (req, res) => {
   })
 })
 
-// default protected route handled by react-router
-app.get('*', function(req, res) {
-  if (req.session.user !== null) {
-    res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
-  }
+// route to check if user is logged in
+app.get('/user', (req, res) => {
+  res.send(req.session.user);
 });
 
-app.post('/logout', (req, res) => {
-  req.session.reset();
-})
+// log out user
+app.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.send('user logged out');
+});
+
+// default protected route handled by react-router
+app.get('*', (req, res) => {
+  if (req.session.user !== undefined) {
+    res.sendFile(path.join(__dirname, '/../client/dist/index.html'));
+  } else {
+    res.redirect('/');
+  }
+});
 
 app.listen(process.env.PORT !== undefined ? process.env.PORT : PORT, () => {
   console.log(`listening on port ${PORT}`);

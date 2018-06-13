@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import axios from 'axios';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import FoodAndEventsPage from './components/FoodAndEventsPage/FoodAndEventsPage.jsx';
@@ -28,13 +29,9 @@ class App extends React.Component {
     this.handleLocSelect = this.handleLocSelect.bind(this)
     this.handleStartDayChange = this.handleStartDayChange.bind(this);
     this.handleEndDayChange = this.handleEndDayChange.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
   }
 
   loginUser(email, password, history) {
-    //console.log('email: ', email);
-    //console.log('password: ', password);
-
     $.ajax({
       url: '/login',
       method: 'POST',
@@ -83,16 +80,10 @@ class App extends React.Component {
     this.setState({ endDate: day });
   }
 
-  handleLogout() {
-    console.log(document.cookie)
-    this.setState({user: null})
-  }
-
   handleLocSelect(location) {
     geocodeByAddress(location)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        // console.log('Success', latLng)
         this.setState({
           loc: location,
           latLng: latLng
@@ -134,13 +125,12 @@ class App extends React.Component {
                 user={this.state.user}
                 inputLocation={this.state.loc}
                 latLng={this.state.latLng}
-                handleLogout={this.handleLogout}
                 {...props}
               />
             )} }/>
           <Route path='/mytrips' render={(props) => {
             return (
-              <MyTripsPage user={this.state.user} handleLogout={this.handleLogout} {...props} />
+              <MyTripsPage user={this.state.user} {...props} />
             )} } />
         </div>
       </Router>

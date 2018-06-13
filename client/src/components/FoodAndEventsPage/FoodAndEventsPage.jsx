@@ -114,9 +114,7 @@ class FoodAndEventsPage extends React.Component {
       <Grid style={ {marginTop: 50} }>
         <Grid.Row>
           <Grid.Column floated="right">
-            <NavBar
-            user={this.props.user} handleLogout={this.props.handleLogout}
-            />
+            <NavBar />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
