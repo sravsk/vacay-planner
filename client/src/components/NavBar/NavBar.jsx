@@ -27,7 +27,8 @@ class NavBar extends React.Component {
         if (result.data === 'user logged out') {
           this.setState({
             user: undefined
-          })
+          });
+          alert('You have been logged out');
         }
       })
   }

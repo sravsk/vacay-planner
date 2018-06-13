@@ -3,6 +3,7 @@ import NavBar from '../NavBar/NavBar.jsx';
 import FoodAndEventsPageBody from './FoodAndEventsPageBody.jsx';
 import FoodAndEventsSidebar from './FoodAndEventsSidebar.jsx';
 import { Tab, Grid } from 'semantic-ui-react';
+import axios from 'axios';
 import $ from 'jquery';
 
 class FoodAndEventsPage extends React.Component {
@@ -16,11 +17,25 @@ class FoodAndEventsPage extends React.Component {
       eventFavorites: [],
       poiList: [],
       poiFavorites: [],
-      tripName: ""
+      tripName: "",
+      user: ''
     };
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.saveTrip = this.saveTrip.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.getRestaurantsByLocation();
+    this.getEventsByLocationAndDate();
+    this.getPOIByLocation();
+    // find logged in user
+    axios.get('/user')
+      .then(result => {
+        this.setState({
+          user: result.data
+        });
+      })
   }
 
   toggleFavorite(listIndex, listName) {
@@ -73,12 +88,6 @@ class FoodAndEventsPage extends React.Component {
       eventFavorites: [],
       tripName: ""
     });
-  }
-
-  componentDidMount() {
-    this.getRestaurantsByLocation();
-    this.getEventsByLocationAndDate();
-    this.getPOIByLocation();
   }
 
   getPOIByLocation() {
@@ -149,7 +158,7 @@ class FoodAndEventsPage extends React.Component {
           </Grid.Column>
           <Grid.Column width={6}>
             <FoodAndEventsSidebar
-              user={this.props.user}
+              user={this.state.user}
               foodFavorites={this.state.foodFavorites}
               eventFavorites={this.state.eventFavorites}
               poiFavorites={this.state.poiFavorites}

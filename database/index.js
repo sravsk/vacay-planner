@@ -148,10 +148,8 @@ var dbHelpers = {
   // to a callback
   getUserTrips: (obj, cb) => {
     var output = [];
-
     User.findOne({where: {email: obj.email}})
     .then( user => {
-
       //find all user Trips
       user.getTrips().then(userTrips => {
         cb(userTrips);
