@@ -69,7 +69,6 @@ app.get('/createdb', (req, res) => {
 
 // Get events from Ticketmaster API
 app.get('/events', (req, res) => {
-
   let startDate = new Date(req.query.startDate).toISOString().split('.')[0]+'Z';
   let endDate = new Date(req.query.endDate).toISOString().split('.')[0]+'Z';
   let location = req.query.location.split(', ')
@@ -89,7 +88,7 @@ app.get('/events', (req, res) => {
 });
 
 app.get('/poi', (req, res) => {
-  gp.getPOI('-33.8670522','151.1957362', (data) => {
+  gp.getPOI(req.query.latLng.lat, req.query.latLng.lng, (data) => {
     res.status(200).send(JSON.parse(data));
   })
 })
