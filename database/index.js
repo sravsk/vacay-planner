@@ -251,6 +251,30 @@ var dbHelpers = {
     })
   },
 
+    //this will add new events to a trip by id
+  updateTripEvent: (tripId, newEvents) => {
+    console.log("trip id", tripId)
+    Trip.findOne({where: {id: tripId}}).then(trip => {
+      if (newEvents.eventList !== undefined) {
+          newEvents.eventList.forEach(event => {
+            var tempEvent = Event.build({
+              name: event.name,
+              eventURL: event.url,
+              eventImg: event.images[0].url,
+              start_date: event.dates.start.dateTime,
+              venueName: event._embedded.venues[0].name,
+              venueLong: event._embedded.venues[0].location.longitude,
+              venueLat: event._embedded.venues[0].location.latitude,
+              venueAddress: `${event._embedded.venues[0].address.line1}, ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].state.stateCode} ${event._embedded.venues[0].postalCode}`
+            })
+
+            tempEvent.setTrip(trip, {save: false});
+            tempEvent.save();
+          })
+        }
+    })
+  },
+
 
   //////////////////////////////////////////////////////////
   //                 Test data use Only                   //

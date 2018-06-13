@@ -35,3 +35,12 @@ ul {
   width: 75vw;
   margin-top : 10px;
 }
+
+.content button.ui.button {
+    margin-top: 2%;
+}
+
+.content button.ui.blue.inverted.button {
+    float: right;
+    margin-top: -5%;
+}
