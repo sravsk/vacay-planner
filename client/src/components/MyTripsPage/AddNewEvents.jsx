@@ -73,7 +73,7 @@ class AddNewEvents extends React.Component {
     return(
         <div>
           <ListAllEvents eventsList={this.state.eventsList} eventFavorites={this.state.eventFavorites} toggleFavorite={this.toggleFavorite}/>
-           <Button onClick={this.handleAddEvent}>Add to trip</Button>
+           <Button color="blue" onClick={this.handleAddEvent}>Add to trip</Button>
         </div>
       )
   }
