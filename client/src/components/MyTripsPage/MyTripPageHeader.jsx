@@ -2,18 +2,22 @@ import React from 'react';
 import {Grid, Button, Modal} from 'semantic-ui-react';
 import $ from 'jquery';
 import AddNewEvents from './AddNewEvents.jsx';
+import AddNewRestaurants from './AddNewRestaurants.jsx';
 
 class MyTripPageHeader extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       allTrips : this.props.allTrips,
-      modalOpen : false
+      modalOpen : false,
+      modalOpenRestaurant : false
     }
 
     this.handleTripDelete = this.handleTripDelete.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+     this.handleOpenRestaurant = this.handleOpenRestaurant.bind(this);
+    this.handleCloseRestaurant = this.handleCloseRestaurant.bind(this);
   }
 
   handleOpen() {
@@ -25,6 +29,18 @@ class MyTripPageHeader extends React.Component{
   handleClose(){
     this.setState({
       modalOpen : false
+    })
+  }
+
+   handleOpenRestaurant() {
+    this.setState({
+      modalOpenRestaurant : true
+    })
+  }
+
+  handleCloseRestaurant(){
+    this.setState({
+      modalOpenRestaurant : false
     })
   }
 
@@ -70,7 +86,7 @@ class MyTripPageHeader extends React.Component{
                         size='small'
                         >
                           <Modal.Content>
-                            <AddNewEvents startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} open={this.state.modalOpen}onClose={this.handleClose} />
+                            <AddNewEvents startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} />
                              <Button color='blue' onClick={this.handleClose} inverted>
                               Close
                               </Button>
@@ -78,7 +94,19 @@ class MyTripPageHeader extends React.Component{
                         </Modal>
                       </Grid.Column>
                       <Grid.Column width={3}>
-                      <Button color="blue">Add Restaurants</Button>
+                      <Modal
+                      trigger={<Button onClick={this.handleOpenRestaurant} color="blue">Add Restaurants</Button>}
+                        open={this.state.modalOpenRestaurant}
+                        onClose={this.handleCloseRestaurant}
+                        size='small'
+                        >
+                          <Modal.Content>
+                            <AddNewRestaurants loc={trip.loc} selectedTrip={this.props.selectedTrip}  />
+                             <Button color='blue' onClick={this.handleCloseRestaurant} inverted>
+                              Close
+                              </Button>
+                          </Modal.Content>
+                        </Modal>
                       </Grid.Column>
                       <Grid.Column width={3}>
                       <Button onClick={this.handleTripDelete} color="grey">Delete Trip</Button>
@@ -95,3 +123,7 @@ class MyTripPageHeader extends React.Component{
 }
 
 export default MyTripPageHeader;
+
+
+
+

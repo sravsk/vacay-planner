@@ -237,7 +237,6 @@ var dbHelpers = {
 
   //this will delete a trip by id and pass the remaining trips to server
   deleteTripID: (tripId, cb) => {
-    console.log("trip id", tripId)
     Trip.findOne({where: {id: tripId}}).then(trip => {
       return  trip.destroy({
         where : {
@@ -253,7 +252,6 @@ var dbHelpers = {
 
     //this will add new events to a trip by id
   updateTripEvent: (tripId, newEvents) => {
-    console.log("trip id", tripId)
     Trip.findOne({where: {id: tripId}}).then(trip => {
       if (newEvents.eventList !== undefined) {
           newEvents.eventList.forEach(event => {
@@ -274,6 +272,32 @@ var dbHelpers = {
         }
     })
   },
+
+
+  //this will add new restaurants to a trip by id
+  updateTripRestaurant: (tripId, newRestaurants) => {
+    Trip.findOne({where: {id: tripId}}).then(trip => {
+         if (newRestaurants.restaurantList !== undefined) {
+          newRestaurants.restaurantList.forEach(restaurant => {
+            var tempRest = Restaurant.build({
+              name: restaurant.name,
+              yelpURL: restaurant.url,
+              review_count: restaurant.review_count,
+              rating: restaurant.rating,
+              price: restaurant.price,
+              restLong: restaurant.coordinates.longitude,
+              restLat: restaurant.coordinates.latitude,
+              categories: restaurant.categories,
+              display_address: restaurant.location.display_address,
+              image_url: restaurant.image_url
+            })
+            tempRest.setTrip(trip, {save: false});
+            tempRest.save();
+          })
+        }
+    })
+  },
+
 
 
   //////////////////////////////////////////////////////////

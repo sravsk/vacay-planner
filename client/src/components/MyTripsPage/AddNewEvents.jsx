@@ -1,18 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 import ListAllEvents from './ListAllEvents.jsx';
-import FoodAndEventsPage from '../FoodAndEventsPage/FoodAndEventsPage.jsx';
 import {Button} from 'semantic-ui-react';
 
 class AddNewEvents extends React.Component {
   constructor(props){
     super(props)
-    console.log("props in AddNewEvents", props)
     this.state = {
       eventsList : [],
-      eventFavorites: [],
-      open : this.props.open,
-      modelOpen : false
+      eventFavorites: []
     }
 
     this.toggleFavorite = this.toggleFavorite.bind(this);
@@ -73,7 +69,7 @@ class AddNewEvents extends React.Component {
     return(
         <div>
           <ListAllEvents eventsList={this.state.eventsList} eventFavorites={this.state.eventFavorites} toggleFavorite={this.toggleFavorite}/>
-           <Button onClick={this.handleAddEvent}>Add to trip</Button>
+           <Button color="blue" onClick={this.handleAddEvent}>Add to trip</Button>
         </div>
       )
   }
