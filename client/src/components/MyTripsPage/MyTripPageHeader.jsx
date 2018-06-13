@@ -1,16 +1,34 @@
 import React from 'react';
-import {Grid, Button} from 'semantic-ui-react';
+import {Grid, Button, Modal} from 'semantic-ui-react';
 import $ from 'jquery';
+import AddNewEvents from './AddNewEvents.jsx';
 
 class MyTripPageHeader extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      allTrips : this.props.allTrips
+      allTrips : this.props.allTrips,
+      modalOpen : false
     }
 
     this.handleTripDelete = this.handleTripDelete.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+
+  handleOpen() {
+    this.setState({
+      modalOpen : true
+    })
+  }
+
+  handleClose(){
+    this.setState({
+      modalOpen : false
+    })
+  }
+
+
 
   handleTripDelete(){
     var tripId = this.props.selectedTrip;
@@ -30,15 +48,14 @@ class MyTripPageHeader extends React.Component{
     })
   }
 
-
   render(){
       return (
         <div>
           {this.state.allTrips.map((trip, index) => {
               if(trip.id === this.props.selectedTrip) {
                 return(
-                   <Grid>
-                      <Grid.Row key={index}>
+                   <Grid key={index}>
+                      <Grid.Row>
                       <Grid.Column width={7}
                       style={trip.id === this.props.selectedTrip ? {color: '#4183c4', fontSize : '24px', margin : '10px 0 20px 0'} : null}
                       key={trip.id}
@@ -46,7 +63,19 @@ class MyTripPageHeader extends React.Component{
                       {trip.tripName} Trip details
                       </Grid.Column>
                       <Grid.Column width={3}>
-                      <Button color="blue">Add Events</Button>
+                      <Modal
+                        trigger={<Button onClick={this.handleOpen} color="blue">Add Events</Button>}
+                        open={this.state.modalOpen}
+                        onClose={this.handleClose}
+                        size='small'
+                        >
+                          <Modal.Content>
+                            <AddNewEvents startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} open={this.state.modalOpen}onClose={this.handleClose} />
+                             <Button color='blue' onClick={this.handleClose} inverted>
+                              Close
+                              </Button>
+                          </Modal.Content>
+                        </Modal>
                       </Grid.Column>
                       <Grid.Column width={3}>
                       <Button color="blue">Add Restaurants</Button>

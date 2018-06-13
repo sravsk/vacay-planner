@@ -31,6 +31,7 @@ class App extends React.Component {
     this.handleEndDayChange = this.handleEndDayChange.bind(this);
   }
 
+
   loginUser(email, password, history) {
     $.ajax({
       url: '/login',
