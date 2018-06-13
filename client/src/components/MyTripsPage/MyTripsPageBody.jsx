@@ -139,24 +139,30 @@ class MyTripsPageBody extends React.Component {
               <Grid.Column floated='right' width={13}>
               <MyTripPageHeader allTrips = {this.state.allTrips} selectedTrip = {this.state.selectedTrip}/>
                 <Accordion fluid styled>
-                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
+                <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
+                    <Icon name='dropdown'/>
+                    Map
+                  </Accordion.Title>
+                  <Accordion.Content active={activeIndex === 0}>
+                    <div id="map"></div>
+                  </Accordion.Content>
+                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 1} index={1} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
                     Saved Events
                   </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 0}>
+                  <Accordion.Content active={activeIndex === 1}>
                     <p> </p>
                     {!this.state.eventsSelected.length ? <p>No Saved Events</p> : <EventsList eventsSelected={this.state.eventsSelected}/>}
                   </Accordion.Content>
-                  <Accordion.Title style={ {color: '#d0021b', fontSize: 20} } active={activeIndex === 1} index={1} onClick={this.handleClick.bind(this)}>
+                  <Accordion.Title style={ {color: '#d0021b', fontSize: 20} } active={activeIndex === 2} index={2} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown' />
                     Saved Restaurants
                   </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 1}>
+                  <Accordion.Content active={activeIndex === 2}>
                     <p> </p>
                     {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected}/>}
                   </Accordion.Content>
                 </Accordion>
-                <div id="map"></div>
               </Grid.Column>
             )
           :

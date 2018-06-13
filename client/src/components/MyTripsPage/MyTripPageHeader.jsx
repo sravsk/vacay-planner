@@ -28,8 +28,6 @@ class MyTripPageHeader extends React.Component{
     })
   }
 
-
-
   handleTripDelete(){
     var tripId = this.props.selectedTrip;
     $.ajax({
