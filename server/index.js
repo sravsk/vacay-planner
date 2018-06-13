@@ -132,6 +132,11 @@ app.post('/events/:id', (req, res) => {
   res.status(200).end('added new events to trip');
 })
 
+app.post('/restaurants/:id', (req, res) => {
+  db.updateTripRestaurant(req.params.id, req.body)
+  res.status(200).end('added new restaurants to trip');
+})
+
 app.post('/login', (req, res) => {
   let email = req.body.email;
   let enteredPassword = req.body.password;
