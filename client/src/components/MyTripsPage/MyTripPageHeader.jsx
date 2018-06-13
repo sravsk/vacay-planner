@@ -2,6 +2,7 @@ import React from 'react';
 import {Grid, Button, Modal} from 'semantic-ui-react';
 import $ from 'jquery';
 import AddNewEvents from './AddNewEvents.jsx';
+import AddNewRestaurants from './AddNewRestaurants.jsx';
 
 class MyTripPageHeader extends React.Component{
   constructor(props){
@@ -78,7 +79,19 @@ class MyTripPageHeader extends React.Component{
                         </Modal>
                       </Grid.Column>
                       <Grid.Column width={3}>
-                      <Button color="blue">Add Restaurants</Button>
+                      <Modal
+                        trigger={<Button onClick={this.handleOpen} color="blue">Add Restaurants</Button>}
+                        open={this.state.modalOpen}
+                        onClose={this.handleClose}
+                        size='small'
+                        >
+                          <Modal.Content>
+                            <AddNewRestaurants startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} open={this.state.modalOpen}onClose={this.handleClose} />
+                             <Button color='blue' onClick={this.handleClose} inverted>
+                              Close
+                              </Button>
+                          </Modal.Content>
+                        </Modal>
                       </Grid.Column>
                       <Grid.Column width={3}>
                       <Button onClick={this.handleTripDelete} color="grey">Delete Trip</Button>
