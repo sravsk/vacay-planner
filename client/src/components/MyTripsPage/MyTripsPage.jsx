@@ -5,7 +5,7 @@ import MyTripsPageBody from './MyTripsPageBody.jsx';
 const MyTripsPage = (props) => {
   return (
     <div className='mytripspage'>
-      <NavBar user={props.user} handleLogout={props.handleLogout}/>
+      <NavBar />
       <MyTripsPageBody />
     </div>
   )
