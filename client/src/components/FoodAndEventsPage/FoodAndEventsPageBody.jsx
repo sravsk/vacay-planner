@@ -1,7 +1,8 @@
 import React from 'react';
 import FoodTabContent from './FoodTabContent.jsx';
 import EventsTabContent from './EventsTabContent.jsx';
-import FoodAndEventsSidebar from './FoodAndEventsSidebar.jsx'
+import FoodAndEventsSidebar from './FoodAndEventsSidebar.jsx';
+import POITabContent from './POITabContent.jsx';
 import { Tab, Grid } from 'semantic-ui-react';
 import $ from 'jquery';
 
@@ -22,11 +23,21 @@ class FoodAndEventsPageBody extends React.Component {
       },
       {
         menuItem: 'Events', render: () =>
-        <Tab.Pane>
+          <Tab.Pane>
             <EventsTabContent
               eventsList={this.props.eventsList}
               toggleFavorite={this.props.toggleFavorite}
               eventFavorites={this.props.eventFavorites}
+            />
+          </Tab.Pane>
+      },
+      {
+        menuItem: 'Points of Interest', render: () =>
+          <Tab.Pane>
+            <POITabContent
+              poiList={this.props.poiList}
+              toggleFavorite={this.props.toggleFavorite}
+              poiFavorites={this.props.poiFavorites}
             />
           </Tab.Pane>
       }

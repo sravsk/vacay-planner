@@ -48,8 +48,8 @@ class App extends React.Component {
   }
 
   signUpUser(email, password, history) {
-    console.log('email: ', email);
-    console.log('password: ', password);
+    //console.log('email: ', email);
+    //console.log('password: ', password);
 
     $.ajax({
       url: '/signup',

@@ -74,6 +74,12 @@ const Event = db.define('event', {
   venueAddress: Sequelize.STRING
 });
 
+const POI = db.define('poi', {
+  id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
+  name: {type: Sequelize.STRING, allowNull: false},
+  latLng: Sequelize.STRING,
+})
+
 
 // This sets up Associations between different tables/models,
 // and gives us nifty helper functions; like setters and getters.
