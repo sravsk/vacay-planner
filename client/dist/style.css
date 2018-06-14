@@ -60,7 +60,7 @@ ul {
 /*  grid-template-columns: repeat(4, 1fr);*/
 /*  float: left;*/
 /*  grid-template-columns: repeat(10, 1.5vw);*/
-  grid-gap: 4em;
+  grid-gap: 2em;
   width: 85%;
   grid-template-columns: repeat(3, 20vw);
   grid-template-rows: repeat(10, 30vh);
