@@ -44,7 +44,7 @@ class NavBar extends React.Component {
           </Menu.Item>
           <Menu.Item position="right">
             <NavLink to='/' activeClassName='active'>
-              Hello, <span>{this.state.user.split("@")[0]}</span>
+              Hello <span>{this.state.user.split("@")[0]}</span>
             </NavLink>
           </Menu.Item>
           <Menu.Item>

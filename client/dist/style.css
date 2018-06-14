@@ -48,3 +48,28 @@ ul {
 .mytripspage .extra button.ui.button {
     float: right;
 }
+
+.wrapper div {
+  border: 2px solid grey;
+  border-radius: 5px;
+/*  background-color: #ffd8a8;*/
+ /* padding: 1em;*/
+  padding-top: 1em;
+  color: #d9480f;
+}
+
+.wrapper {
+  display: grid;
+/*  margin-left: 10em;*/
+/*  grid-template-columns: repeat(4, 1fr);*/
+/*  float: left;*/
+/*  grid-template-columns: repeat(10, 1.5vw);*/
+  grid-gap: 4em;
+  width: 85%;
+  grid-template-columns: repeat(3, 20vw);
+  grid-template-rows: repeat(10, 30vh);
+}
+
+.day {
+  padding-left: 2em;
+}
