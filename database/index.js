@@ -162,12 +162,13 @@ var dbHelpers = {
   // given a Trip ID
   getTripItems: (tripId, cb) => {
     Trip.findOne({where: {id: tripId}}).then(trip => {
-
       output = {
         loc: trip.loc,
         latLng: trip.latLng,
         events: [],
-        restaurants: []
+        restaurants: [],
+        startDate: trip.start_date,
+        endDate: trip.end_date
       }
       trip.getEvents()
       .then(tripEvents => output.events = tripEvents)
