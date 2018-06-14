@@ -9,8 +9,6 @@ import Itinerary from './Itinerary.jsx';
 import $ from 'jquery';
 import moment from 'moment';
 
-const moment = require('moment');
-
 class MyTripsPageBody extends React.Component {
   constructor(props) {
     super(props);

@@ -305,7 +305,7 @@ var dbHelpers = {
 
 
     })
-  }
+  },
 
 
   //this will add new restaurants to a trip by id
