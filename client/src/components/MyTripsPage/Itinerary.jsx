@@ -27,7 +27,11 @@ class Itinerary extends React.Component {
     // add restaurant to card
     console.log('newRest', restaurant, selectedTrip, this.state.dateIndex)
     // save restaurant in database in array corresponding to this day and trip
-
+    var params = {
+      restaurant: restaurant,
+      tripId: selectedTrip,
+      dateIndex: this.state.dateIndex
+    };
 
   }
 

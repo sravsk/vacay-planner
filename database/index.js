@@ -294,6 +294,19 @@ var dbHelpers = {
     })
   },
 
+  // add restaurant to a day of a particular trip
+  addRestaurantToDay: (tripId, dayIndex, restaurant) => {
+    Trip.findOne({where: {id: tripId}})
+    .then(trip => {
+      let itinerary = trip.itinerary;
+      itinerary[dayIndex].push(restaurant);
+      // save to trip
+
+
+
+    })
+  },
+
 
   //this will add new restaurants to a trip by id
   updateTripRestaurant: (tripId, newRestaurants) => {
