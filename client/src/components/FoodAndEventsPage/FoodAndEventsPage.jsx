@@ -9,7 +9,6 @@ import $ from 'jquery';
 class FoodAndEventsPage extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       restaurantList: [],
       eventsList: [],
@@ -18,7 +17,7 @@ class FoodAndEventsPage extends React.Component {
       poiList: [],
       poiFavorites: [],
       tripName: "",
-      user: ''
+      user: undefined
     };
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.saveTrip = this.saveTrip.bind(this);
@@ -62,7 +61,6 @@ class FoodAndEventsPage extends React.Component {
 
   saveTrip() {
     var data = {
-      user:  {email: 'ted.green@test.com'},
       trip: {
         start_date: this.props.startDate,
         end_date: this.props.endDate,
