@@ -6,8 +6,10 @@ import LocationSearchInput from './LocationSearchInput.jsx';
 
 const LandingPageBody = (props) => (
   <Grid centered style={ {marginTop: 50} }>
+  <div className="hero-image-wrap"></div>
     <Grid.Row>
-      <Grid.Column style={{ maxWidth: 450}}>
+      <Grid.Column width={10}><Card centered fluid className="landing-text">The new way to plan your next trip</Card></Grid.Column>
+      <Grid.Column width={6} style={{ maxWidth: 450, marginTop : '2%'}}>
         <Card centered fluid>
           <Card.Content header='Vacation Planner' />
           <Card.Content extra>
