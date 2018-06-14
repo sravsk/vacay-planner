@@ -8,6 +8,8 @@ import MyTripPageHeader from './MyTripPageHeader.jsx';
 import Itinerary from './Itinerary.jsx';
 import $ from 'jquery';
 
+const moment = require('moment');
+
 class MyTripsPageBody extends React.Component {
   constructor(props) {
     super(props);
