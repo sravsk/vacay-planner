@@ -298,6 +298,22 @@ var dbHelpers = {
   },
 
 
+  //this will delete a event by id and pass the remaining events for that trip to server
+  deleteEventID: (tripId, eventId, cb) => {
+    Event.findOne({where: {id: eventId}}).then(event => {
+      return  event.destroy({
+        where : {
+          id : eventId
+        }
+      })
+    }).then(deletedEvent => {
+      return Event.findAll({ where : { tripId : tripId}})
+    }).then(events => {
+      cb(events);
+    })
+  },
+
+
 
   //////////////////////////////////////////////////////////
   //                 Test data use Only                   //
