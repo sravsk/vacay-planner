@@ -1,12 +1,13 @@
 import React from 'react';
 import Proptypes from 'prop-types';
-import moment from 'moment';
 import { Grid, Accordion, Icon } from 'semantic-ui-react';
 import SelectTrip from './SelectTrip.jsx';
 import EventsList from './EventsList.jsx';
 import RestaurantsList from './RestaurantsList.jsx';
 import MyTripPageHeader from './MyTripPageHeader.jsx';
 import $ from 'jquery';
+
+var moment = require('moment');
 
 class MyTripsPageBody extends React.Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class MyTripsPageBody extends React.Component {
       restaurantsSelected: [],
       activeIndex: null,
       loc: '',
-      latLng: {}
+      latLng: {},
+      startDate: new Date(),
+      endDate: new Date(),
     };
     this.updateSelection = this.updateSelection.bind(this);
   }
@@ -52,12 +55,14 @@ class MyTripsPageBody extends React.Component {
       url: `/trips/${tripId}`,
       success: result => {
         var data = JSON.parse(result)
-        // console.log(JSON.parse(result))
+        // console.log('trip details', JSON.parse(result))
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,
           loc: data.loc,
-          latLng: JSON.parse(data.latLng)
+          latLng: JSON.parse(data.latLng),
+          startDate: data.startDate,
+          endDate: data.endDate
         })
         // if map container is already initialized, remove map
         if (this.mymap) {
@@ -161,6 +166,13 @@ class MyTripsPageBody extends React.Component {
                   <Accordion.Content active={activeIndex === 2}>
                     <p> </p>
                     {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected}/>}
+                  </Accordion.Content>
+                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 3} index={3} onClick={this.handleClick.bind(this)}>
+                    <Icon name='dropdown'/>
+                    Calendar
+                  </Accordion.Title>
+                  <Accordion.Content active={activeIndex === 3}>
+                    <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}, Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}</div>
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>

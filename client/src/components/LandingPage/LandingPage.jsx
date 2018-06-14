@@ -13,7 +13,6 @@ const LandingPage = (props) => (
       handleLocSelect={props.handleLocSelect}
       loc={props.loc}
     />
-
   </div>
 );
 
