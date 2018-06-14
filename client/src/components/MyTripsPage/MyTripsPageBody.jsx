@@ -57,7 +57,7 @@ class MyTripsPageBody extends React.Component {
       url: `/trips/${tripId}`,
       success: result => {
         var data = JSON.parse(result)
-        console.log('trip details', data)
+        // console.log('trip details', data)
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,

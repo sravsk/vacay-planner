@@ -5,24 +5,23 @@ class Itinerary extends React.Component {
     super(props);
   }
 
-  render() {
-    var days = this.props.itinerary.map(day => {
-      return Object.keys(day)[0]
-    });
-    // console.log(days)
-    return (
-      <div>
-        <div className="wrapper">
-          {days.map((day, i) => (
-            <div className="day" key={i}>
-              {day}
-              <br/><br/>
-              <button>Add restaurant</button><br/><br/>
-              <button>Add point of interest</button>
-            </div>
-            ))
-          }
+  render () {
+    let toRender = [];
+    let itinerary = this.props.itinerary;
+    for (var i = 0; i < itinerary.length; i++) {
+      var date = Object.keys(itinerary[i])[0];
+      toRender[i] = (
+        <div className="day" key={i}>
+          {date}
+          <br/><br/>
+          <button>Add restaurant</button><br/><br/>
+          <button>Add point of interest</button>
         </div>
+      );
+    }
+    return (
+      <div className="wrapper">
+        {toRender}
       </div>
     );
   }
