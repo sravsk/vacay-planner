@@ -5,6 +5,7 @@ import SelectTrip from './SelectTrip.jsx';
 import EventsList from './EventsList.jsx';
 import RestaurantsList from './RestaurantsList.jsx';
 import MyTripPageHeader from './MyTripPageHeader.jsx';
+import Calendar from './Calendar.jsx';
 import $ from 'jquery';
 
 var moment = require('moment');
@@ -128,7 +129,16 @@ class MyTripsPageBody extends React.Component {
   }
 
   render() {
-    const {activeIndex} = this.state
+    const {activeIndex} = this.state;
+    let days = [];
+    let i = 0;
+    let tempDate = moment(this.state.startDate);
+    while (tempDate <= moment(this.state.endDate)) {
+      days.push(tempDate.format("dddd, MMMM Do YYYY"));
+      i++;
+      tempDate = moment(this.state.startDate).add(i, 'days');
+    }
+    console.log('days', days)
     return (
       <div>
         <Grid columns='equal' style={ { marginTop: 50, backgroundColor: 'white'} }>
@@ -172,7 +182,8 @@ class MyTripsPageBody extends React.Component {
                     Calendar
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
-                    <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}, Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}</div>
+                    <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}, Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}
+                    <Calendar days={days} /></div>
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>
