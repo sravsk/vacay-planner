@@ -45,10 +45,9 @@ ul {
     margin-top: -5%;
 }
 
-.extra button.ui.button {
+.mytripspage .extra button.ui.button {
     float: right;
-}
-.wrapper div {
+}.wrapper div {
   border: 2px solid grey;
   border-radius: 5px;
 /*  background-color: #ffd8a8;*/
