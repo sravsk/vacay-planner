@@ -138,6 +138,12 @@ app.delete('/trips/:id/:eventId', (req, res) => {
   });
 })
 
+app.delete('/trips/:id/restaurants/:restaurantId', (req, res) => {
+  db.deleteRestaurantID(req.params.id, req.params.restaurantId,  (obj) => {
+    res.status(200).end(JSON.stringify(obj))
+  });
+})
+
 app.post('/restaurants/:id', (req, res) => {
   db.updateTripRestaurant(req.params.id, req.body)
   res.status(200).end('added new restaurants to trip');
