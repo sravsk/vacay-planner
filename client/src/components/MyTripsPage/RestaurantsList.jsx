@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { Image, Item, Header, Card, Icon } from 'semantic-ui-react';
+import { Image, Item, Header, Card, Icon, Button } from 'semantic-ui-react';
 
 class RestaurantsList extends React.Component {
   constructor(props){
@@ -9,6 +9,21 @@ class RestaurantsList extends React.Component {
     this.state = {
       restaurantsSelected : this.props.restaurantsSelected
     }
+  }
+
+  handleDeleteRestaurant(restaurantId){
+    $.ajax({
+      type : 'DELETE',
+      url : `trips/${this.props.selectedTrip}/restaurants/${restaurantId}`,
+      success : (results) => {
+        this.setState({
+          restaurantsSelected : JSON.parse(results)
+        })
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    })
   }
 
   render(){
@@ -47,6 +62,7 @@ class RestaurantsList extends React.Component {
                     <Icon name='food' fitted style={ {paddingLeft: 10}}/> {restaurant.categories.map(category => {
                       return category.title
                     }).join(', ')}
+                    <Button onClick={this.handleDeleteRestaurant.bind(this, restaurant.id)}>Delete Restaurant</Button>
                   </Item.Extra>
                 </Item.Content>
               </Item>
