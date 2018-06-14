@@ -1,8 +1,6 @@
 import React from 'react';
 
-
-
-const Calendar = (props) => (
+const Itinerary = (props) => (
   <div>
     <div className="wrapper">
       {props.days.map((day, i) => (
@@ -18,4 +16,4 @@ const Calendar = (props) => (
   </div>
 );
 
-export default Calendar;
+export default Itinerary;
