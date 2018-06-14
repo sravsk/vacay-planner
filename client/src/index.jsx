@@ -17,7 +17,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      user: undefined,
       loc: '',
       latLng: {},
       startDate: new Date(),
@@ -49,9 +49,6 @@ class App extends React.Component {
   }
 
   signUpUser(email, password, history) {
-    //console.log('email: ', email);
-    //console.log('password: ', password);
-
     $.ajax({
       url: '/signup',
       method: 'POST',
