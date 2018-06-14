@@ -7,6 +7,7 @@ import RestaurantsList from './RestaurantsList.jsx';
 import MyTripPageHeader from './MyTripPageHeader.jsx';
 import Itinerary from './Itinerary.jsx';
 import $ from 'jquery';
+import moment from 'moment';
 
 class MyTripsPageBody extends React.Component {
   constructor(props) {
