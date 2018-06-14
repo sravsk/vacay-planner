@@ -8,8 +8,6 @@ import MyTripPageHeader from './MyTripPageHeader.jsx';
 import Itinerary from './Itinerary.jsx';
 import $ from 'jquery';
 
-var moment = require('moment');
-
 class MyTripsPageBody extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +21,7 @@ class MyTripsPageBody extends React.Component {
       latLng: {},
       startDate: new Date(),
       endDate: new Date(),
+      itinerary: []
     };
     this.updateSelection = this.updateSelection.bind(this);
   }
@@ -56,14 +55,15 @@ class MyTripsPageBody extends React.Component {
       url: `/trips/${tripId}`,
       success: result => {
         var data = JSON.parse(result)
-        // console.log('trip details', JSON.parse(result))
+        console.log('trip details', data)
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,
           loc: data.loc,
           latLng: JSON.parse(data.latLng),
           startDate: data.startDate,
-          endDate: data.endDate
+          endDate: data.endDate,
+          itinerary: JSON.parse(data.itinerary)
         })
         // if map container is already initialized, remove map
         if (this.mymap) {
@@ -130,15 +130,6 @@ class MyTripsPageBody extends React.Component {
 
   render() {
     const {activeIndex} = this.state;
-    let days = [];
-    let i = 0;
-    let tempDate = moment(this.state.startDate);
-    while (tempDate <= moment(this.state.endDate)) {
-      days.push(tempDate.format("dddd, MMMM Do YYYY"));
-      i++;
-      tempDate = moment(this.state.startDate).add(i, 'days');
-    }
-    // console.log('days', days)
     return (
       <div>
         <Grid columns='equal' style={ { marginTop: 50, backgroundColor: 'white'} }>
@@ -183,7 +174,7 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
                     <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}<br/> Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}<br/><br/>
-                    <Itinerary days={days} /></div>
+                    <Itinerary itinerary={this.state.itinerary} /></div>
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>
