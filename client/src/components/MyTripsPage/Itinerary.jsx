@@ -1,28 +1,55 @@
 import React from 'react';
+import {Grid, Button, Modal} from 'semantic-ui-react';
+import AddRestModal from './AddRestModal.jsx';
 
 class Itinerary extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showRestModal: false,
+      dateIndex: 0
+    }
+    this.addRestaurant = this.addRestaurant.bind(this);
   }
 
-  render() {
-    var days = this.props.itinerary.map(day => {
-      return Object.keys(day)[0]
+  addRestaurant (selectedTrip, index, date) { // reference day by index i
+    console.log('In addRestaurant function', selectedTrip, index, date)
+    this.setState({
+      showRestModal: true,
+      dateIndex: index
+    })
+  }
+
+  hideModalAddRestaurant(restaurant, selectedTrip) {
+    this.setState({
+      showRestModal: false
     });
-    // console.log(days)
-    return (
-      <div>
-        <div className="wrapper">
-          {days.map((day, i) => (
-            <div className="day" key={i}>
-              {day}
-              <br/><br/>
-              <button>Add restaurant</button><br/><br/>
-              <button>Add point of interest</button>
-            </div>
-            ))
-          }
+    // add restaurant to card
+    console.log('newRest', restaurant, selectedTrip, this.state.dateIndex)
+    // save restaurant in database in array corresponding to this day and trip
+
+
+  }
+
+  render () {
+    let toRender = [];
+    let itinerary = this.props.itinerary;
+    itinerary.forEach((day, index) => {
+      var date = Object.keys(day)[0];
+      const j = index;
+      toRender[index] = (
+        <div className="day" key={index}>
+          {date}
+          <br/><br/>
+          <button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</button><br/><br/>
+          <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+          <button>Add point of interest</button>
         </div>
+      );
+    })
+    return (
+      <div className="wrapper">
+        {toRender}
       </div>
     );
   }

@@ -9,6 +9,8 @@ import Itinerary from './Itinerary.jsx';
 import $ from 'jquery';
 import moment from 'moment';
 
+const moment = require('moment');
+
 class MyTripsPageBody extends React.Component {
   constructor(props) {
     super(props);
@@ -56,7 +58,7 @@ class MyTripsPageBody extends React.Component {
       url: `/trips/${tripId}`,
       success: result => {
         var data = JSON.parse(result)
-        console.log('trip details', data)
+        // console.log('trip details', data)
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,
@@ -175,7 +177,7 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
                     <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}<br/> Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}<br/><br/>
-                    <Itinerary itinerary={this.state.itinerary} /></div>
+                    <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} /></div>
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>

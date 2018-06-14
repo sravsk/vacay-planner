@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const session = require('client-sessions');
 const bcrypt = require('bcrypt-nodejs');
 const path = require('path');
-const moment = require('moment');
 
 const db = require('../database');
 const tm = require('../helpers/tm');
@@ -96,7 +95,6 @@ app.get('/poi', (req, res) => {
 
 // Get restaurants from Yelp API
 app.get('/restaurants/:location', (req, res) => {
-  console.log('LOCATION', req.params.location)
   yelp.getRestaurants(req.params.location, data => {
     parsedData = JSON.parse(data);
     res.status(200).send((parsedData));
