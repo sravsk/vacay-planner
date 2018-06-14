@@ -44,3 +44,7 @@ ul {
     float: right;
     margin-top: -5%;
 }
+
+.extra button.ui.button {
+    float: right;
+}
