@@ -138,7 +138,7 @@ class MyTripsPageBody extends React.Component {
       i++;
       tempDate = moment(this.state.startDate).add(i, 'days');
     }
-    console.log('days', days)
+    // console.log('days', days)
     return (
       <div>
         <Grid columns='equal' style={ { marginTop: 50, backgroundColor: 'white'} }>
@@ -182,7 +182,7 @@ class MyTripsPageBody extends React.Component {
                     Calendar
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
-                    <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}, Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}
+                    <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}<br/> Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}<br/><br/>
                     <Calendar days={days} /></div>
                   </Accordion.Content>
                 </Accordion>
