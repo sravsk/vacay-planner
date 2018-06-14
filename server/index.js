@@ -132,8 +132,10 @@ app.post('/events/:id', (req, res) => {
   res.status(200).end('added new events to trip');
 })
 
-app.delete('/events/:id', (req, res) => {
-  db.deleteEventID(req.params.id, (obj) => res.status(200).end(JSON.stringify(obj)));
+app.delete('/trips/:id/:eventId', (req, res) => {
+  db.deleteEventID(req.params.id, req.params.eventId,  (obj) => {
+    res.status(200).end(JSON.stringify(obj))
+  });
 })
 
 app.post('/restaurants/:id', (req, res) => {
