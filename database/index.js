@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const moment = require('moment');
 
 const testRests = require('../sample_data/sample_restaurants.js');
 const testEvents = require('../sample_data/sample_events.js');
@@ -45,8 +46,9 @@ const Trip = db.define('trips', {
   end_date: Sequelize.DATE,
   tripName: {type: Sequelize.STRING, allowNull: false, unique: true},
   loc: Sequelize.STRING,
-  latLng: Sequelize.STRING
-})
+  latLng: Sequelize.STRING,
+  itinerary: Sequelize.TEXT // stringify an array of objects - keys will be days in trip and properties will be itineraries for the corresonding days
+});
 
 var Restaurant = db.define('restaurants', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
@@ -60,7 +62,7 @@ var Restaurant = db.define('restaurants', {
   categories: Sequelize.JSON,
   image_url: Sequelize.STRING,
   display_address: Sequelize.JSON
-})
+});
 
 const Event = db.define('event', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
@@ -78,7 +80,7 @@ const POI = db.define('poi', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   name: {type: Sequelize.STRING, allowNull: false},
   latLng: Sequelize.STRING,
-})
+});
 
 
 // This sets up Associations between different tables/models,
@@ -155,6 +157,9 @@ var dbHelpers = {
         cb(userTrips);
       })
     })
+    // .catch(err=> {
+    //   cb(null);
+    // })
   },
 
   // This will get all trip items
@@ -168,7 +173,8 @@ var dbHelpers = {
         events: [],
         restaurants: [],
         startDate: trip.start_date,
-        endDate: trip.end_date
+        endDate: trip.end_date,
+        itinerary: trip.itinerary
       }
       trip.getEvents()
       .then(tripEvents => output.events = tripEvents)
@@ -184,13 +190,29 @@ var dbHelpers = {
   // & Restaurants to the Database
   newTrip: (email, obj) => {
     User.findOne({where: {email: email}}).then(user => {
+      // find trip days
+      let days = [];
+      let itinerary = [];
+      let i = 0;
+      let tempDate = moment(obj.trip.start_date,);
+      while (tempDate <= moment(obj.trip.end_date)) {
+        days.push(tempDate.format("dddd, MMMM Do YYYY"));
+        i++;
+        tempDate = moment(obj.trip.start_date).add(i, 'days');
+      }
+      // convert days array to an array of objects with days as keys and empty arrays as properties
+      days.forEach((day, i) => {
+        itinerary[i] = {};
+        itinerary[i][day] = [];
+      })
       //create the Trip
       user.createTrip({
         start_date: obj.trip.start_date,
         end_date: obj.trip.end_date,
         tripName: obj.trip.name,
         loc: obj.trip.loc,
-        latLng: JSON.stringify(obj.trip.latLng)
+        latLng: JSON.stringify(obj.trip.latLng),
+        itinerary: JSON.stringify(itinerary)
       }).then(trip => {
         //create the Events if they exist
         if (obj.eventList !== undefined) {
