@@ -45,6 +45,9 @@ ul {
     margin-top: -5%;
 }
 
+.extra button.ui.button {
+    float: right;
+}
 .wrapper div {
   border: 2px solid grey;
   border-radius: 5px;

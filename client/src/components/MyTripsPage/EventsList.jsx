@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import { Image, Item, Header, Card, Label } from 'semantic-ui-react';
+import { Image, Item, Header, Card, Label, Button } from 'semantic-ui-react';
+import DeleteEvent from './DeleteEvent.jsx';
 
 function EventsList(props) {
   return (
@@ -28,6 +29,7 @@ function EventsList(props) {
                     >
                       {moment(event.start_date).format('MMM DD ddd')}
                     </Label>
+                    <DeleteEvent id={event.id} eventsSelected={props.eventsSelected}/>
                   </Item.Extra>
                 </Item.Content>
               </Item>
