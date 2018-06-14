@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Image, Item, Header, Card, Icon, Button } from 'semantic-ui-react';
+import $ from 'jquery';
 
 class RestaurantsList extends React.Component {
   constructor(props){

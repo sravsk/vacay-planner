@@ -354,6 +354,21 @@ var dbHelpers = {
     })
   },
 
+  //this will delete a restaurant by id and pass the remaining restaurants for that trip to server
+  deleteRestaurantID: (tripId, restaurantId, cb) => {
+    Restaurant.findOne({where: {id: restaurantId}}).then(restaurant => {
+      return  restaurant.destroy({
+        where : {
+          id : restaurantId
+        }
+      })
+    }).then(deletedRestaurant => {
+      return Restaurant.findAll({ where : { tripId : tripId}})
+    }).then(restaurants => {
+      cb(restaurants);
+    })
+  },
+
 
 
   //////////////////////////////////////////////////////////
