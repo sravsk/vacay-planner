@@ -15,7 +15,7 @@ class EventsList extends React.Component{
   handleDeleteEvent(eventId){
     $.ajax({
       type : 'DELETE',
-      url : `trips/${this.props.selectedTrip}/${eventId}`,
+      url : `trips/${this.props.selectedTrip}/events/${eventId}`,
       success : (results) => {
         this.setState({
           eventsSelected : JSON.parse(results)
