@@ -1,11 +1,36 @@
 import React from 'react';
 import moment from 'moment';
-import { Image, Item, Header, Card, Icon } from 'semantic-ui-react';
+import { Image, Item, Header, Card, Icon, Button } from 'semantic-ui-react';
+import $ from 'jquery';
 
-function RestaurantsList(props) {
-  return (
-    <div style={{marginTop: -25}}>
-      {props.restaurantsSelected.map((restaurant, index) => {
+class RestaurantsList extends React.Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      restaurantsSelected : this.props.restaurantsSelected
+    }
+  }
+
+  handleDeleteRestaurant(restaurantId){
+    $.ajax({
+      type : 'DELETE',
+      url : `trips/${this.props.selectedTrip}/restaurants/${restaurantId}`,
+      success : (results) => {
+        this.setState({
+          restaurantsSelected : JSON.parse(results)
+        })
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  render(){
+    return(
+      <div style={{marginTop: -25}}>
+      {this.state.restaurantsSelected.map((restaurant, index) => {
         return (
           <Card fluid key={restaurant.id}>
             <Item.Group>
@@ -38,6 +63,7 @@ function RestaurantsList(props) {
                     <Icon name='food' fitted style={ {paddingLeft: 10}}/> {restaurant.categories.map(category => {
                       return category.title
                     }).join(', ')}
+                    <Button onClick={this.handleDeleteRestaurant.bind(this, restaurant.id)}>Delete Restaurant</Button>
                   </Item.Extra>
                 </Item.Content>
               </Item>
@@ -46,7 +72,8 @@ function RestaurantsList(props) {
         )
       })}
     </div>
-  )
+      )
+  }
 }
 
 export default RestaurantsList;
