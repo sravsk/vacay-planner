@@ -286,7 +286,6 @@ var dbHelpers = {
               venueLat: event._embedded.venues[0].location.latitude,
               venueAddress: `${event._embedded.venues[0].address.line1}, ${event._embedded.venues[0].city.name}, ${event._embedded.venues[0].state.stateCode} ${event._embedded.venues[0].postalCode}`
             })
-
             tempEvent.setTrip(trip, {save: false});
             tempEvent.save();
           })
@@ -295,18 +294,25 @@ var dbHelpers = {
   },
 
   // add restaurant to a day of a particular trip
-  addRestaurantToDay: (tripId, dayIndex, restaurant) => {
+  addRestaurantToDay: (tripId, dayIndex, restaurant, callback) => {
     Trip.findOne({where: {id: tripId}})
     .then(trip => {
-      let itinerary = trip.itinerary;
-      itinerary[dayIndex].push(restaurant);
+      let itinerary = JSON.parse(trip.itinerary);
+      let key = Object.keys(itinerary[dayIndex])[0]
+      itinerary[dayIndex][key].push(restaurant);
       // save to trip
-
-
-
+      // id, start date, end date, itinerary, etc.
+      // itinerary.setTrip(trip, {save: false});
+      // itinerary.save();
+      trip.itinerary = JSON.stringify(itinerary)
+      trip.save().then(() => {
+        Trip.findOne({where: {id: tripId}})
+        .then(trip => {
+          callback(trip.itinerary);
+        })
+      })
     })
   },
-
 
   //this will add new restaurants to a trip by id
   updateTripRestaurant: (tripId, newRestaurants) => {
