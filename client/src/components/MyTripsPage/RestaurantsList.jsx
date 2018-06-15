@@ -8,7 +8,7 @@ class RestaurantsList extends React.Component {
     super(props)
 
     this.state = {
-      restaurantsSelected : this.props.restaurantsSelected
+      restaurantsSelected : []
     }
   }
 
@@ -20,6 +20,7 @@ class RestaurantsList extends React.Component {
         this.setState({
           restaurantsSelected : JSON.parse(results)
         })
+        location.reload()
       },
       error : (err) => {
         console.log(err);
@@ -30,7 +31,7 @@ class RestaurantsList extends React.Component {
   render(){
     return(
       <div style={{marginTop: -25}}>
-      {this.state.restaurantsSelected.map((restaurant, index) => {
+      {this.props.restaurantsSelected.map((restaurant, index) => {
         return (
           <Card fluid key={restaurant.id}>
             <Item.Group>
