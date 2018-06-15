@@ -93,10 +93,11 @@ class Itinerary extends React.Component {
                     size='small'
                     >
                     <Modal.Content>
-                      <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
-                       <Button color='blue' onClick={this.handleClose} inverted>
-                        Close
-                        </Button>
+                      <AddRestModal show={this.state.showRestModal}  selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+                      <Modal.Actions>
+                          <Button onClick={ (restaurant) => {this.hideModalAddRestaurant.bind(this) , this.props.selectedTrip} }>Submit</Button>
+                         <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
+                      </Modal.Actions>
                     </Modal.Content>
                  </Modal>
                 <Button>Add point of interest</Button>
