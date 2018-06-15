@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Button, Modal} from 'semantic-ui-react';
+import {Grid, Button, Modal, Card, Icon, Image} from 'semantic-ui-react';
 import axios from 'axios';
 import AddRestModal from './AddRestModal.jsx';
 import moment from 'moment';
@@ -61,22 +61,42 @@ class Itinerary extends React.Component {
         );
       });
       toRender[index] = (
-        <div className="day" key={index}>
-          {date}
-          {tripDetails}
-          <br/><br/>
-          <button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</button><br/><br/>
-          <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
-          <button>Add point of interest</button>
-        </div>
+        <Grid.Column key={index}>
+          <Grid.Row>
+           <Card>
+            <Card.Content className="custom-grid-calendar">
+              <Card.Header>
+                {date.slice(0, -7)}
+                {tripDetails}
+              </Card.Header>
+              <Card.Description>
+                <Button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</Button><br/><br/>
+                <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+                <Button>Add point of interest</Button>
+              </Card.Description>
+            </Card.Content>
+          </Card>
+        </Grid.Row>
+        </Grid.Column>
       );
     })
     return (
-      <div className="wrapper">
+      <Grid columns={3}>
         {toRender}
-      </div>
+        </Grid>
     );
   }
 }
 
 export default Itinerary;
+
+
+
+        // <div className="day" key={index}>
+        //   {date}
+        //   {tripDetails}
+        //   <br/><br/>
+        //   <button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</button><br/><br/>
+        //   <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+        //   <button>Add point of interest</button>
+        // </div>

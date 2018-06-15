@@ -141,3 +141,9 @@ ul {
   color: black;
   border-style: none;
 }
+
+
+.content.custom-grid-calendar {
+    background-color: #afd0f13b !important;
+    padding: 2.5em !important;
+}
