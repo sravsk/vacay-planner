@@ -104,17 +104,24 @@ app.get('/restaurants/:location', (req, res) => {
 // Get saved trips from database for a registered user
 app.get('/trips', (req, res) => {
   if (req.session.user !== null) {
-    db.getUserTrips({email: req.session.user}, (obj) => res.status(200).end(JSON.stringify(obj)))
+    db.getUserTrips({email: req.session.user}, (obj) => {
+      console.log('TRIPOBJ', obj)
+      res.status(200).end(JSON.stringify(obj))
+    })
   } else {
     console.log('must be logged in to get trips')
   }
 });
 
 app.get('/trips/:id', (req, res) => {
-  db.getTripItems(req.params.id, (obj) => res.status(200).end(JSON.stringify(obj)));
+  db.getTripItems(req.params.id, (obj) => {
+    console.log('tripobj', obj)
+    res.status(200).end(JSON.stringify(obj))
+  });
 });
 
 app.post('/trips', (req, res) => {
+    console.log('REQBOD', req.body)
   if (req.session.user){
     db.newTrip(req.session.user, req.body)
     res.status(200).end('successfully added trip')
@@ -147,6 +154,11 @@ app.delete('/trips/:id/restaurants/:restaurantId', (req, res) => {
 app.post('/restaurants/:id', (req, res) => {
   db.updateTripRestaurant(req.params.id, req.body)
   res.status(200).end('added new restaurants to trip');
+})
+
+app.post('/poi/:id', (req, res) => {
+  db.updateTripPOI(req.params.id, req.body)
+  res.status(200).end('added new poi to trip');
 })
 
 app.post('/login', (req, res) => {

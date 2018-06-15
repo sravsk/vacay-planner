@@ -4,6 +4,7 @@ import { Grid, Accordion, Icon } from 'semantic-ui-react';
 import SelectTrip from './SelectTrip.jsx';
 import EventsList from './EventsList.jsx';
 import RestaurantsList from './RestaurantsList.jsx';
+import POIList from './POIList.jsx';
 import MyTripPageHeader from './MyTripPageHeader.jsx';
 import Itinerary from './Itinerary.jsx';
 import $ from 'jquery';
@@ -17,6 +18,7 @@ class MyTripsPageBody extends React.Component {
       allTrips: [],
       eventsSelected: [],
       restaurantsSelected: [],
+      poiSelected: [],
       activeIndex: null,
       loc: '',
       latLng: {},
@@ -51,15 +53,18 @@ class MyTripsPageBody extends React.Component {
   }
 
   getTripDetailsById(tripId) {
+    console.log('TRIPID', tripId)
     $.ajax({
       type: 'GET',
       url: `/trips/${tripId}`,
       success: result => {
         var data = JSON.parse(result)
         // console.log('trip details', data)
+        console.log('tripdata', data)
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,
+          poiSelected: data.poi,
           loc: data.loc,
           latLng: JSON.parse(data.latLng),
           startDate: data.startDate,
@@ -125,6 +130,7 @@ class MyTripsPageBody extends React.Component {
               allTrips: data
             })
           this.updateSelection(this.state.selectedTrip);
+          console.log('DATA', data);
         }
       }
     })
@@ -174,9 +180,17 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Content>
                   <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 3} index={3} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
-                    Itinerary
+                    Saved Points of Interest
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
+                    <p> </p>
+                    {/*{!this.state.poiSelected.length ? <p>No Saved Points of Interest</p> : <POIList poiSelected={this.state.poiSelected} selectedTrip = {this.state.selectedTrip}/>*/}
+                  </Accordion.Content>
+                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 4} index={4} onClick={this.handleClick.bind(this)}>
+                    <Icon name='dropdown'/>
+                    Itinerary
+                  </Accordion.Title>
+                  <Accordion.Content active={activeIndex === 4}>
                     <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}<br/> Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}<br/><br/>
                     <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} /></div>
                   </Accordion.Content>

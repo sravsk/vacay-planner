@@ -78,8 +78,9 @@ const Event = db.define('event', {
 
 const POI = db.define('poi', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
+  latLng: Sequelize.JSON,
   name: {type: Sequelize.STRING, allowNull: false},
-  latLng: Sequelize.STRING,
+  rating: Sequelize.FLOAT
 });
 
 
@@ -112,10 +113,18 @@ Trip.hasMany(Event, {
 
 Event.belongsTo(Trip);
 
+Trip.hasMany(POI, {
+  foreignKey: {
+    allowNull: false
+  }
+})
+
+POI.belongsTo(Trip);
+
 // This long promise chain is required to make sure
 // that all of the associations are setup properly.
 
-User.sync().then(() => Trip.sync().then(() => Restaurant.sync().then(() => Event.sync())));
+User.sync().then(() => Trip.sync().then(() => Restaurant.sync().then(() => Event.sync().then(() => POI.sync()))));
 
 // These are all of the functions that are
 // being exported to the server file.
@@ -172,6 +181,7 @@ var dbHelpers = {
         latLng: trip.latLng,
         events: [],
         restaurants: [],
+        poi: [],
         startDate: trip.start_date,
         endDate: trip.end_date,
         itinerary: trip.itinerary
@@ -180,7 +190,11 @@ var dbHelpers = {
       .then(tripEvents => output.events = tripEvents)
       .then(() => {trip.getRestaurants()
         .then(tripRestaurants => output.restaurants = tripRestaurants)
-        .then( () => cb(output) )
+        // .then( () => cb(output) )
+      })
+      .then(() => {trip.getPOI()
+        .then(tripPOI => output.poi = tripPOI)
+        .then(() => cb(output))
       })
     })
   },
@@ -214,6 +228,7 @@ var dbHelpers = {
         latLng: JSON.stringify(obj.trip.latLng),
         itinerary: JSON.stringify(itinerary)
       }).then(trip => {
+        console.log('OBJPOI', obj)
         //create the Events if they exist
         if (obj.eventList !== undefined) {
           obj.eventList.forEach(event => {
@@ -250,6 +265,19 @@ var dbHelpers = {
             })
             tempRest.setTrip(trip, {save: false});
             tempRest.save();
+          })
+        }
+        //create the POI if they exist
+        if (obj.poiList !== undefined) {
+          obj.poiList.forEach(poi => {
+            console.log('poi', poi)
+            var tempPOI = POI.build({
+              latLng: poi.geometry.location,
+              name: poi.name,
+              rating: poi.rating
+            })
+            tempPOI.setTrip(trip, {save: false});
+            tempPOI.save();
           })
         }
       })
@@ -338,6 +366,21 @@ var dbHelpers = {
     })
   },
 
+  updateTripPOI: (tripId, newPOI) => {
+    POI.findOne({where: {id: tripId}}).then(trip => {
+      if (newPOI.poiList !== undefined) {
+        newPOI.poiList.forEach(poi => {
+          var tempPOI = POI.build({
+            name: poi.results.name,
+            latLng: poi.results.geometry.location,
+            rating: poi.results.rating
+          })
+          tempPOI.setTrip(trip, {save: false});
+          tempPOI.save();
+        })
+      }
+    })
+  },
 
   //this will delete a event by id and pass the remaining events for that trip to server
   deleteEventID: (tripId, eventId, cb) => {

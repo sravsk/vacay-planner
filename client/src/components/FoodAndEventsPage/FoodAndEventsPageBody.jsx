@@ -1,8 +1,8 @@
 import React from 'react';
 import FoodTabContent from './FoodTabContent.jsx';
 import EventsTabContent from './EventsTabContent.jsx';
-import FoodAndEventsSidebar from './FoodAndEventsSidebar.jsx';
 import POITabContent from './POITabContent.jsx';
+import FoodAndEventsSidebar from './FoodAndEventsSidebar.jsx';
 import { Tab, Grid } from 'semantic-ui-react';
 import $ from 'jquery';
 
