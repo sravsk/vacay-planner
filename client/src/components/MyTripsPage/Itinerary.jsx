@@ -1,22 +1,23 @@
 import React from 'react';
 import {Grid, Button, Modal} from 'semantic-ui-react';
+import axios from 'axios';
 import AddRestModal from './AddRestModal.jsx';
+import moment from 'moment';
 
 class Itinerary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showRestModal: false,
-      dateIndex: 0
+      dayIndex: 0
     }
     this.addRestaurant = this.addRestaurant.bind(this);
   }
 
-  addRestaurant (selectedTrip, index, date) { // reference day by index i
-    console.log('In addRestaurant function', selectedTrip, index, date)
+  addRestaurant (selectedTrip, index, date) { // reference day by index
     this.setState({
       showRestModal: true,
-      dateIndex: index
+      dayIndex: index
     })
   }
 
@@ -25,13 +26,18 @@ class Itinerary extends React.Component {
       showRestModal: false
     });
     // add restaurant to card
-    console.log('newRest', restaurant, selectedTrip, this.state.dateIndex)
+    // console.log('newRest', restaurant, selectedTrip, this.state.dateIndex)
     // save restaurant in database in array corresponding to this day and trip
     var params = {
       restaurant: restaurant,
       tripId: selectedTrip,
-      dateIndex: this.state.dateIndex
+      dayIndex: this.state.dayIndex
     };
+    axios.post('/addRestToDay', params)
+    .then(result => {
+      let itinerary = result.data
+      console.log('itinerary after adding restaurant', itinerary);
+    })
 
   }
 
