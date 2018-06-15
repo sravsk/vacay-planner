@@ -45,13 +45,20 @@ class FoodAndEventsPage extends React.Component {
         newFoodFavorites.push(this.state.restaurantList[listIndex]);
       }
       this.setState({ foodFavorites: newFoodFavorites });
-    } else {
+    } else if (listName === 'events') {
       let selectedEvent = this.state.eventsList[listIndex];
       let newEventFavorites = this.state.eventFavorites.filter(eventfav => eventfav.id !== selectedEvent.id);
       if (newEventFavorites.length === this.state.eventFavorites.length) {
         newEventFavorites.push(this.state.eventsList[listIndex]);
       }
       this.setState({ eventFavorites: newEventFavorites });
+    } else if (listName === 'poi') {
+      let selectedPOI = this.state.poiList[listIndex];
+      let newPOIFavorites = this.state.poiFavorites.filter(poiFav => poiFav.id !== selectedPOI.id);
+      if (newPOIFavorites.length === this.state.poiFavorites.length) {
+        newPOIFavorites.push(this.state.poiList[listIndex]);
+      }
+      this.setState({ poiFavorites: newPOIFavorites });
     }
   }
 
@@ -69,7 +76,8 @@ class FoodAndEventsPage extends React.Component {
         latLng: this.props.latLng
       },
       eventList: this.state.eventFavorites,
-      restaurantList: this.state.foodFavorites
+      restaurantList: this.state.foodFavorites,
+      poiList: this.state.poiFavorites
     };
     $.ajax({
       method: 'POST',
@@ -84,6 +92,7 @@ class FoodAndEventsPage extends React.Component {
     this.setState({
       foodFavorites: [],
       eventFavorites: [],
+      poiFavorites: [],
       tripName: ""
     });
   }
@@ -137,6 +146,7 @@ class FoodAndEventsPage extends React.Component {
     return (
       //Column width must add up to 16
       <Grid style={ {marginTop: 50} }>
+      <button onClick={() => console.log(this.state)}></button>
         <Grid.Row>
           <Grid.Column floated="right">
             <NavBar />

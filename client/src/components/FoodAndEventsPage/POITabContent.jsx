@@ -17,7 +17,7 @@ const POITabContent = (props) => (
                 <Item.Extra>
                   <SaveButton
                     toggleFavorite={() => props.toggleFavorite(i, 'poi')}
-                    isSaved={props.poiFavorites.find(poiFave => poiFav.id === poi.id) ? true : false} />
+                    isSaved={props.poiFavorites.find(poiFav => poiFav.id === poi.id) ? true : false} />
                 </Item.Extra>
               </Item.Content>
             </Item>

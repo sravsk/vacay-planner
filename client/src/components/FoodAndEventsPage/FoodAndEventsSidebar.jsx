@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import FavFoodCard from './FavFoodCard.jsx';
 import FavEventCard from './FavEventCard.jsx';
+import FavPOICard from './FavPOICard.jsx';
 
 const FoodAndEventsSidebar = (props) => {
   const panes = [
@@ -22,6 +23,12 @@ const FoodAndEventsSidebar = (props) => {
           <List celled size='large'>
             {props.eventFavorites.map((event, index) => {
                 return <FavEventCard event={event} key={'favevent' + event.id} />;
+            })}
+          </List>
+          {props.poiFavorites.length > 0 ? <h2>Points of Interest</h2> : ''}
+          <List celled size='large'>
+            {props.poiFavorites.map((poi, index) => {
+              return <FavPOICard poi={poi} key={'favpoi' + poi.id} />
             })}
           </List>
           {props.foodFavorites.length + props.eventFavorites.length === 0 ? '' : (
