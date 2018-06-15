@@ -8,8 +8,14 @@ class EventsList extends React.Component{
     super(props)
 
     this.state = {
-      eventsSelected : this.props.eventsSelected
+      eventsSelected : []
     }
+  }
+
+  componentDidMount(){
+    this.setState({
+      eventsSelected : this.props.eventsSelected
+    })
   }
 
   handleDeleteEvent(eventId){
@@ -20,6 +26,7 @@ class EventsList extends React.Component{
         this.setState({
           eventsSelected : JSON.parse(results)
         })
+        location.reload()
       },
       error : (err) => {
         console.log(err);
@@ -31,7 +38,7 @@ class EventsList extends React.Component{
   render(){
     return(
        <div style={{marginTop: -25}}>
-        {this.state.eventsSelected.map((event, index) => {
+        {this.props.eventsSelected.map((event, index) => {
           return (
             <Card fluid key={event.id}>
               <Item.Group>
