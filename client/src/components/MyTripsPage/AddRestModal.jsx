@@ -4,9 +4,14 @@ import axios from 'axios';
 class AddRestModal extends React.Component {
   constructor(props) {
     super(props);
+    let rest = this.props.selectedRestaurants[0];
     this.state = {
-      restaurant: `${this.props.selectedRestaurants[0].name}, ${this.props.selectedRestaurants[0].display_address}`,
-      dateIndex: this.props.dateIndex
+      restaurant: `${rest.name}, ${rest.display_address}`,
+      dayIndex: this.props.dateIndex,
+      // latLng: {
+      //   lat: rest.restLat,
+      //   lng: rest.restLong
+      // }
     }
   }
 
