@@ -9,7 +9,8 @@ class Itinerary extends React.Component {
     super(props);
     this.state = {
       showRestModal: false,
-      dayIndex: 0
+      dayIndex: 0,
+      itinerary: []
     }
     this.addRestaurant = this.addRestaurant.bind(this);
   }
@@ -35,15 +36,22 @@ class Itinerary extends React.Component {
     };
     axios.post('/addRestToDay', params)
     .then(result => {
-      let itinerary = result.data
-      console.log('itinerary after adding restaurant', itinerary);
+      this.setState({
+        itinerary: result.data
+      })
+      console.log('itinerary after adding restaurant', result.data);
     })
 
   }
 
   render () {
     let toRender = [];
-    let itinerary = this.props.itinerary;
+    let itinerary = [];
+    if (this.state.itinerary.length == 0) {
+      itinerary = this.props.itinerary;
+    } else {
+      itinerary = this.state.itinerary;
+    }
     itinerary.forEach((day, index) => {
       var date = Object.keys(day)[0];
       const j = index;
