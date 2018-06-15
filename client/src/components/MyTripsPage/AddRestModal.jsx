@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Select, Button, Dropdown } from 'semantic-ui-react'
 
 class AddRestModal extends React.Component {
   constructor(props) {
@@ -15,10 +16,11 @@ class AddRestModal extends React.Component {
     }
   }
 
-  onChange(event) {
+  onChange(event, { value} ) {
     this.setState({
       [event.target.name]: event.target.value
     });
+    //this.setState({ value })
   }
 
   render() {
@@ -30,18 +32,35 @@ class AddRestModal extends React.Component {
       );
     });
     return (
-      <div className={showHideClassName}>
-      in modal component
+
         <div className="modal-main">
         <br/>
-        <h4>Add restaurant: </h4><select name='restaurant' value={this.state.restaurant} onChange={this.onChange.bind(this)}>
-          {optionItems}
-        </select><br/><br/>
-          <button className="btn" onClick={ (restaurant) => {return this.props.handleClose(this.state.restaurant, this.props.selectedTrip)} }>Submit</button>
+        <h4>Select Restaurant</h4>
+        <Dropdown
+          placeholder="Select a Restaurant"
+          onChange={this.onChange.bind(this)}
+          options={optionItems}
+          value={this.state.restaurant}
+          selection/>
+        <br/><br/>
+          <Button className="btn" onClick={ (restaurant) => {return this.props.handleClose(this.state.restaurant, this.props.selectedTrip)} }>Submit</Button>
         </div>
-      </div>
+
     );
   }
 }
 
 export default AddRestModal;
+
+
+
+  // <div className={showHideClassName}>
+  //     in modal component
+  //       <div className="modal-main">
+  //       <br/>
+  //       <h4>Add restaurant: </h4><select name='restaurant' value={this.state.restaurant} onChange={this.onChange.bind(this)}>
+  //         {optionItems}
+  //       </select><br/><br/>
+  //         <button className="btn" onClick={ (restaurant) => {return this.props.handleClose(this.state.restaurant, this.props.selectedTrip)} }>Submit</button>
+  //       </div>
+  //     </div>

@@ -10,9 +10,12 @@ class Itinerary extends React.Component {
     this.state = {
       showRestModal: false,
       dayIndex: 0,
-      itinerary: []
+      itinerary: [],
+       modalOpen : false
     }
     this.addRestaurant = this.addRestaurant.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   addRestaurant (selectedTrip, index, date) { // reference day by index
@@ -43,6 +46,19 @@ class Itinerary extends React.Component {
 
   }
 
+
+  handleOpen() {
+    this.setState({
+      modalOpen : true
+    })
+  }
+
+  handleClose(){
+    this.setState({
+      modalOpen : false
+    })
+  }
+
   render () {
     let toRender = [];
     let itinerary = [];
@@ -70,8 +86,19 @@ class Itinerary extends React.Component {
                 {tripDetails}
               </Card.Header>
               <Card.Description>
-                <Button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</Button><br/><br/>
-                <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+                 <Modal
+                    trigger={ <Button onClick={this.handleOpen}>Add restaurant</Button>}
+                    open={this.state.modalOpen}
+                    onClose={this.handleClose}
+                    size='small'
+                    >
+                    <Modal.Content>
+                      <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+                       <Button color='blue' onClick={this.handleClose} inverted>
+                        Close
+                        </Button>
+                    </Modal.Content>
+                 </Modal>
                 <Button>Add point of interest</Button>
               </Card.Description>
             </Card.Content>
@@ -91,12 +118,6 @@ class Itinerary extends React.Component {
 export default Itinerary;
 
 
-
-        // <div className="day" key={index}>
-        //   {date}
-        //   {tripDetails}
-        //   <br/><br/>
-        //   <button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</button><br/><br/>
-        //   <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
-        //   <button>Add point of interest</button>
-        // </div>
+// <Button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</Button><br/><br/>
+//                 <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+//                 <Button>Add point of interest</Button>
