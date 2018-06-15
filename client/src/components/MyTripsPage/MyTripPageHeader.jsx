@@ -3,6 +3,7 @@ import {Grid, Button, Modal} from 'semantic-ui-react';
 import $ from 'jquery';
 import AddNewEvents from './AddNewEvents.jsx';
 import AddNewRestaurants from './AddNewRestaurants.jsx';
+import moment from 'moment';
 
 class MyTripPageHeader extends React.Component{
   constructor(props){
@@ -74,7 +75,8 @@ class MyTripPageHeader extends React.Component{
                       style={trip.id === this.props.selectedTrip ? {color: '#4183c4', fontSize : '24px', margin : '10px 0 20px 0'} : null}
                       key={trip.id}
                       >
-                      {trip.tripName} Trip details
+                      {/*{trip.tripName} Trip details*/}
+                      <span>{moment(trip.end_date).diff(trip.start_date, 'days')} days in {trip.tripName}</span>
                       </Grid.Column>
                       <Grid.Column width={3}>
                       <Modal

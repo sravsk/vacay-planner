@@ -66,6 +66,7 @@ class MyTripsPageBody extends React.Component {
           endDate: data.endDate,
           itinerary: JSON.parse(data.itinerary)
         })
+        console.log('trip details', this.state)
         // if map container is already initialized, remove map
         if (this.mymap) {
           this.mymap.eachLayer(function(layer) {
@@ -145,6 +146,8 @@ class MyTripsPageBody extends React.Component {
             (
               <Grid.Column floated='right' width={13}>
               <MyTripPageHeader allTrips = {this.state.allTrips} selectedTrip = {this.state.selectedTrip}/>
+              <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} />
+              <br/>
                 <Accordion fluid styled>
                 <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
