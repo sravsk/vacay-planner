@@ -50,7 +50,7 @@ ul {
 }
 
 .wrapper div {
-  border: 2px solid grey;
+  border: 1px solid grey;
   border-radius: 5px;
 /*  background-color: #ffd8a8;*/
  /* padding: 1em;*/
@@ -67,7 +67,7 @@ ul {
   grid-gap: 4em;
   width: 85%;
   grid-template-columns: repeat(3, 20vw);
-  grid-template-rows: repeat(10, 30vh);
+  grid-template-rows: repeat(10, 50vh);
 }
 
 .day {
@@ -135,4 +135,9 @@ ul {
     height: auto;
     -webkit-font-smoothing: antialiased;
     width: 100%;
+}
+
+.item div {
+  color: black;
+  border-style: none;
 }

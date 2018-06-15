@@ -39,7 +39,6 @@ class Itinerary extends React.Component {
       this.setState({
         itinerary: result.data
       })
-      console.log('itinerary after adding restaurant', result.data);
     })
 
   }
@@ -54,10 +53,17 @@ class Itinerary extends React.Component {
     }
     itinerary.forEach((day, index) => {
       var date = Object.keys(day)[0];
-      const j = index;
+      var tripItems = day[date];
+      // iterate over tripItems
+      var tripDetails = tripItems.map((item, i) => {
+        return (
+          <span key={i}><br/><br/>{item}</span>
+        );
+      });
       toRender[index] = (
         <div className="day" key={index}>
           {date}
+          {tripDetails}
           <br/><br/>
           <button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</button><br/><br/>
           <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
