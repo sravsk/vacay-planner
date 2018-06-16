@@ -75,7 +75,9 @@ class Itinerary extends React.Component {
       // iterate over tripItems
       var tripDetails = tripItems.map((item, i) => {
         return (
-          <span key={i}><br/><br/>{item}</span>
+          <li className="list-item" key={i}>
+            <span className="text"><br/><br/>{i + 1}.&nbsp;&nbsp;{item}</span>
+          </li>
         );
       });
       toRender[index] = (
@@ -85,7 +87,7 @@ class Itinerary extends React.Component {
             <Card.Content className="custom-grid-calendar">
               <Card.Header>
                 {date.slice(0, -7)}
-                {tripDetails}
+                  {tripDetails}
               </Card.Header>
               <Card.Description>
 

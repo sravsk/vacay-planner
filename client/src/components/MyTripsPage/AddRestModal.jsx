@@ -27,8 +27,8 @@ class AddRestModal extends React.Component {
     let optionItems = restaurants.map((restaurant) => {
       return (
            newSelection = {
-            text : restaurant.name + restaurant.display_address,
-            value : restaurant.name + restaurant.display_address
+            text : restaurant.name + '; ' + restaurant.display_address,
+            value : restaurant.name + '; ' + restaurant.display_address
         }
       );
     });

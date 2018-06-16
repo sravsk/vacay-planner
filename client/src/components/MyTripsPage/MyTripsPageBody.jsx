@@ -97,7 +97,7 @@ class MyTripsPageBody extends React.Component {
         // Add a marker for each restaurant
         data.restaurants.forEach(restaurant => {
           L.marker([restaurant.restLat, restaurant.restLong], {icon: restaurantMarker}).addTo(this.mymap)
-            .bindPopup(restaurant.name);
+            .bindPopup(`Restaurant: ${restaurant.name}`);
         });
 
         // marker for events
@@ -108,7 +108,7 @@ class MyTripsPageBody extends React.Component {
         // Add a marker for each event
         data.events.forEach(event => {
           L.marker([event.venueLat, event.venueLong], {icon: eventMarker}).addTo(this.mymap)
-            .bindPopup(`${event.name} at ${event.venueName}`);
+            .bindPopup(`Event: ${event.name} at ${event.venueName}`);
         });
 
         // marker for points of interest
@@ -121,7 +121,7 @@ class MyTripsPageBody extends React.Component {
           var poiLat = parseFloat(poi.latLng.lat);
           var poiLng = parseFloat(poi.latLng.lng);
           L.marker([poiLat, poiLng], {icon: poiMarker}).addTo(this.mymap)
-            .bindPopup(poi.name);
+            .bindPopup(`Point of Interest: ${poi.name}`);
         });
 
       }

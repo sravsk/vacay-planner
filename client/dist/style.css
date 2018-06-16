@@ -146,3 +146,13 @@ ul {
     background-color: #afd0f13b !important;
     padding: 2.5em !important;
 }
+
+.text {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.list-item {
+  margin-top: -40px;
+  padding: 0px;
+}
