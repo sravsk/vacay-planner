@@ -102,6 +102,7 @@ app.get('/poi', (req, res) => {
   })
 })
 
+
 // Get restaurants from Yelp API
 app.get('/restaurants/:location', (req, res) => {
   yelp.getRestaurants(req.params.location, data => {
@@ -156,6 +157,13 @@ app.delete('/trips/:id/restaurants/:restaurantId', (req, res) => {
     res.status(200).end(JSON.stringify(obj))
   });
 })
+
+app.delete('/trips/:id/poi/:poiId', (req, res) => {
+  db.deletePoiID(req.params.id, req.params.poiId,  (obj) => {
+    res.status(200).end(JSON.stringify(obj))
+  });
+})
+
 
 app.post('/restaurants/:id', (req, res) => {
   db.updateTripRestaurant(req.params.id, req.body)

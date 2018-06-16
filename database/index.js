@@ -430,6 +430,21 @@ var dbHelpers = {
     })
   },
 
+    //this will delete a POI by id and pass the remaining restaurants for that trip to server
+  deletePoiID: (tripId, poiId, cb) => {
+    POI.findOne({where: {id: poiId}}).then(poi => {
+      return  poi.destroy({
+        where : {
+          id : poiId
+        }
+      })
+    }).then(deletedPOI => {
+      return POI.findAll({ where : { tripId : tripId}})
+    }).then(pois => {
+      cb(pois);
+    })
+  },
+
 
 
   //////////////////////////////////////////////////////////
