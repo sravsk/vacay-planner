@@ -105,7 +105,6 @@ app.get('/restaurants/:location', (req, res) => {
 app.get('/trips', (req, res) => {
   if (req.session.user !== null) {
     db.getUserTrips({email: req.session.user}, (obj) => {
-      // console.log('TRIPOBJ inside /trips', obj)
       res.status(200).end(JSON.stringify(obj))
     })
   } else {
@@ -115,13 +114,11 @@ app.get('/trips', (req, res) => {
 
 app.get('/trips/:id', (req, res) => {
   db.getTripItems(req.params.id, (obj) => {
-    // console.log('tripobj', obj)
     res.status(200).end(JSON.stringify(obj))
   });
 });
 
 app.post('/trips', (req, res) => {
-    // console.log('REQBOD', req.body)
   if (req.session.user){
     db.newTrip(req.session.user, req.body)
     res.status(200).end('successfully added trip')

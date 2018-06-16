@@ -196,7 +196,6 @@ var dbHelpers = {
         return POI.findAll({ where : {tripId : tripId}}).then(tripPOIs => output.poi = tripPOIs )
         })
       .then(trips => {
-        // console.log("output before sending to server", output)
         cb(output)
       })
     })
@@ -240,7 +239,6 @@ var dbHelpers = {
         latLng: JSON.stringify(obj.trip.latLng),
         itinerary: JSON.stringify(itinerary)
       }).then(trip => {
-        // console.log('OBJPOI', obj)
         //create the Events if they exist
         if (obj.eventList !== undefined) {
           obj.eventList.forEach(event => {
@@ -262,7 +260,6 @@ var dbHelpers = {
         //create the Restaurants if they exist
         if (obj.restaurantList !== undefined) {
           obj.restaurantList.forEach(restaurant => {
-            // console.log("Restaurant", Restaurant)
             var tempRest = Restaurant.build({
               name: restaurant.name,
               yelpURL: restaurant.url,
@@ -282,7 +279,6 @@ var dbHelpers = {
         //create the POI if they exist
         if (obj.poiList !== undefined) {
           obj.poiList.forEach(poi => {
-            // console.log('poi', poi)
             var tempPOI = POI.build({
               latLng: poi.geometry.location,
               name: poi.name,
