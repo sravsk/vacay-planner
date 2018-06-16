@@ -17,7 +17,7 @@ function SelectTrip(props) {
         )
       })}
     </Menu>
-  )  
+  )
 }
 
 SelectTrip.propTypes = {

@@ -53,13 +53,11 @@ class MyTripsPageBody extends React.Component {
   }
 
   getTripDetailsById(tripId) {
-    // console.log('TRIPID', tripId)
     $.ajax({
       type: 'GET',
       url: `/trips/${tripId}`,
       success: result => {
         var data = JSON.parse(result)
-        // console.log('trip details', data)
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,
@@ -69,7 +67,7 @@ class MyTripsPageBody extends React.Component {
           startDate: data.startDate,
           endDate: data.endDate,
           itinerary: JSON.parse(data.itinerary)
-        });
+        })
         // if map container is already initialized, remove map
         if (this.mymap) {
           this.mymap.eachLayer(function(layer) {
@@ -112,19 +110,6 @@ class MyTripsPageBody extends React.Component {
             .bindPopup(`${event.name} at ${event.venueName}`);
         });
 
-        // marker for points of interest
-        var poiMarker = L.AwesomeMarkers.icon({
-          icon: 'star',
-          markerColor: 'orange'
-        });
-        // Add a marker for each point of interest
-        data.poi.forEach(poi => {
-          var poiLat = parseFloat(poi.latLng.lat);
-          var poiLng = parseFloat(poi.latLng.lng);
-          L.marker([poiLat, poiLng], {icon: poiMarker}).addTo(this.mymap)
-            .bindPopup(poi.name);
-        });
-
       }
     })
   }
@@ -141,7 +126,7 @@ class MyTripsPageBody extends React.Component {
               allTrips: data
             })
           this.updateSelection(this.state.selectedTrip);
-          // console.log('DATA', data);
+          console.log('DATA', data);
         }
       }
     })
@@ -196,14 +181,6 @@ class MyTripsPageBody extends React.Component {
                   <Accordion.Content active={activeIndex === 3}>
                     <p> </p>
                     {!this.state.poiSelected.length ? <p>No Saved Points of Interest</p> : <POIList poiSelected={this.state.poiSelected} selectedTrip = {this.state.selectedTrip}/>}
-                  </Accordion.Content>
-                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 4} index={4} onClick={this.handleClick.bind(this)}>
-                    <Icon name='dropdown'/>
-                    Itinerary
-                  </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 4}>
-                    <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}<br/> Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}<br/><br/>
-                    <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} poiSelected={this.state.poiSelected} /></div>
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>
