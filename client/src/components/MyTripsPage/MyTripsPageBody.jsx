@@ -53,7 +53,7 @@ class MyTripsPageBody extends React.Component {
   }
 
   getTripDetailsById(tripId) {
-    console.log('TRIPID', tripId)
+    // console.log('TRIPID', tripId)
     $.ajax({
       type: 'GET',
       url: `/trips/${tripId}`,
@@ -141,7 +141,7 @@ class MyTripsPageBody extends React.Component {
               allTrips: data
             })
           this.updateSelection(this.state.selectedTrip);
-          console.log('DATA', data);
+          // console.log('DATA', data);
         }
       }
     })
