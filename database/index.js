@@ -181,22 +181,35 @@ var dbHelpers = {
         latLng: trip.latLng,
         events: [],
         restaurants: [],
-        poi: [],
+        pois: [],
         startDate: trip.start_date,
         endDate: trip.end_date,
         itinerary: trip.itinerary
       }
+
       trip.getEvents()
       .then(tripEvents => output.events = tripEvents)
-      .then(() => {trip.getRestaurants()
-        .then(tripRestaurants => output.restaurants = tripRestaurants)
-        // .then( () => cb(output) )
-      })
-      .then(() => {trip.getPOI()
-        .then(tripPOI => output.poi = tripPOI)
-        .then(() => cb(output))
+      .then(trip.getRestaurants()
+      .then(tripRestaurants => {
+        return output.restaurants = tripRestaurants
+      }))
+      .then(Restaurants => {
+        return POI.findAll({ where : {id : tripId}}).then(tripPOIs => output.poi = tripPOIs )
+        })
+      .then(trips => {
+        console.log("output before sending to server", output)
+        cb(output)
       })
     })
+
+    // method to grab only events and restaurants
+
+     // trip.getEvents()
+     //  .then(tripEvents => output.events = tripEvents)
+     //  .then(() => {trip.getRestaurants()
+     //  .then(tripRestaurants => output.restaurants = tripRestaurants)
+     //    .then(() => cb(output))
+     //  })
   },
 
   // This will create a new Trip

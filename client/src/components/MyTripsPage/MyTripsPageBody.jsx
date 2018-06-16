@@ -184,7 +184,7 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
                     <p> </p>
-                    {/*{!this.state.poiSelected.length ? <p>No Saved Points of Interest</p> : <POIList poiSelected={this.state.poiSelected} selectedTrip = {this.state.selectedTrip}/>*/}
+                    {!this.state.poiSelected.length ? <p>No Saved Points of Interest</p> : <POIList poiSelected={this.state.poiSelected} selectedTrip = {this.state.selectedTrip}/>}
                   </Accordion.Content>
                   <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 4} index={4} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
