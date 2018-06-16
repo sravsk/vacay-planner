@@ -12,7 +12,7 @@ class AddRestModal extends React.Component {
     super(props);
     this.state = {
       restaurant: '',
-      time: null,
+      time: moment().format('h:mm a'),
       latLng: {
         lat: 0,
         lng: 0
@@ -27,11 +27,12 @@ class AddRestModal extends React.Component {
   }
 
   onTimeSelect (value) {
-    let newTime = moment(value, [format12]).format('HHmm');
-    console.log(newTime);
-    this.setState = {
+    let newTime = moment(value, [format12]).format('h:mm a');
+   // let newTime = moment(value, [format12]).format('HHmm');
+  //  console.log(newTime);
+    this.setState({
       time: newTime
-    }
+    });
   }
 
   render() {
@@ -66,7 +67,7 @@ class AddRestModal extends React.Component {
             use12Hours
             inputReadOnly 
           />
-        <Button onClick={(restaurant) => this.props.addRest(this.state.restaurant)}>Submit</Button>
+        <Button onClick={(restaurant) => this.props.addRest(this.state.restaurant, this.state.time)}>Submit</Button>
       </div>
     );
   }
