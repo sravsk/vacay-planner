@@ -37,12 +37,15 @@ class Itinerary extends React.Component {
     })
   }
 
-  hideModalAddItem(item) {
+  hideModalAddItem(item, itemTime) {
     var params = {
       item: item,
       tripId: this.state.selectedTrip,
       dayIndex: this.state.dayIndex
     };
+    if(itemTime){
+      params.item = item + "\n @" + itemTime;
+    }
     // console.log('params to save in database', params);
     axios.post('/addItemToDay', params)
     .then(result => {
