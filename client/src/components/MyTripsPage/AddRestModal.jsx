@@ -5,11 +5,7 @@ import { Select, Button, Dropdown, Grid } from 'semantic-ui-react'
 import moment from 'moment';
 import TimePicker from 'rc-time-picker';
 
-const format = 'h:mm a';
-
-function onTimeChange(value) {
-  console.log(value && value.format(format));
-}
+const format12 = 'h:mm a';
 
 class AddRestModal extends React.Component {
   constructor(props) {
@@ -18,6 +14,7 @@ class AddRestModal extends React.Component {
     this.state = {
       restaurant: `${rest.name}, ${rest.display_address}`,
       dayIndex: this.props.dateIndex,
+      time: null
       // latLng: {
       //   lat: rest.restLat,
       //   lng: rest.restLong
@@ -29,6 +26,14 @@ class AddRestModal extends React.Component {
    this.setState({
    value : value.value
      })
+  }
+
+  onTimeSelect (value) {
+    let newTime = moment(value, [format12]).format('HHmm');
+    console.log(newTime);
+    this.setState = {
+      time: newTime;
+    }
   }
 
   render() {
@@ -64,8 +69,8 @@ class AddRestModal extends React.Component {
           showSecond={false}
           defaultValue={moment()}
           className="xxx"
-          onChange={onTimeChange}
-          format={format}
+          onChange={this.onTimeSelect.bind(this)}
+          format={format12}
           minuteStep={5}
           use12Hours
           inputReadOnly
