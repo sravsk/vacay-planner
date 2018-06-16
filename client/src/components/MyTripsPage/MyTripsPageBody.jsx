@@ -1,6 +1,6 @@
 import React from 'react';
 import Proptypes from 'prop-types';
-import { Grid, Accordion, Icon } from 'semantic-ui-react';
+import { Grid, Accordion, Icon , Tab, Segment} from 'semantic-ui-react';
 import SelectTrip from './SelectTrip.jsx';
 import EventsList from './EventsList.jsx';
 import RestaurantsList from './RestaurantsList.jsx';
@@ -24,7 +24,8 @@ class MyTripsPageBody extends React.Component {
       latLng: {},
       startDate: new Date(),
       endDate: new Date(),
-      itinerary: []
+      itinerary: [],
+      activeIndex : 0
     };
     this.updateSelection = this.updateSelection.bind(this);
     this.handleDeleteEvent = this.handleDeleteEvent.bind(this);
@@ -197,7 +198,7 @@ class MyTripsPageBody extends React.Component {
               <Grid.Column floated='right' width={13}>
               <MyTripPageHeader allTrips = {this.state.allTrips} selectedTrip = {this.state.selectedTrip}/>
               <Accordion fluid styled>
-                <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
+                <Accordion.Title style={ { color: '#d0021b', fontSize: 20, display : 'block'} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
                     Itinerary
                   </Accordion.Title>

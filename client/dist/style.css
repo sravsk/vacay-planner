@@ -15,7 +15,7 @@ ul {
 }
 
 .ui.grid {
-  margin-left: 10px;
+  /*margin-left: 10px;*/
 }
 
 .container {
@@ -310,3 +310,22 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   margin-top: -40px;
   padding: 0px;
 }
+
+.ui.fluid.accordion, .ui.fluid.accordion .accordion {
+  width : 93%;
+}
+
+
+/* chaging accordion to tab - hack */
+/*.title {
+    float: left;
+}
+
+.ui.accordion .accordion .title .dropdown.icon, .ui.accordion .title .dropdown.icon {
+    display: none;
+}
+
+.content.active {
+    height: 5000000px;
+}
+*/
