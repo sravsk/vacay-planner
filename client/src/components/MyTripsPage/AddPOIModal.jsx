@@ -22,8 +22,7 @@ class AddPOIModal extends React.Component {
 
   render() {
     const value  = this.state.poi;
-    let poi = this.props.selectedpoi;
-    console.log('POI selected', this.props)
+    let poi = this.props.selectedPOI;
     var newSelection;
     let optionItems = poi.map((item) => {
       return (

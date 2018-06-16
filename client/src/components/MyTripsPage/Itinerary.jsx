@@ -16,6 +16,7 @@ class Itinerary extends React.Component {
       poiModalOpen: false
     }
     this.handleOpen = this.handleOpen.bind(this);
+    this.handlePOIOpen = this.handlePOIOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.hideModalAddItem = this.hideModalAddItem.bind(this);
   }
@@ -42,7 +43,7 @@ class Itinerary extends React.Component {
       tripId: this.state.selectedTrip,
       dayIndex: this.state.dayIndex
     };
-    console.log('params to save in database', params);
+    // console.log('params to save in database', params);
     axios.post('/addItemToDay', params)
     .then(result => {
       this.setState({
@@ -97,7 +98,6 @@ class Itinerary extends React.Component {
                     <Modal.Content>
                       <AddRestModal show={this.state.modalOpen} selectedRestaurants={this.props.restaurantsSelected} addRest={this.hideModalAddItem} />
                       <Modal.Actions>
-                       {/*} <Button onClick={(restaurant) => this.hideModalAddRestaurant(this.state.restaurant)}>Submit</Button> */}
                         <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
                       </Modal.Actions>
                     </Modal.Content>
@@ -110,7 +110,7 @@ class Itinerary extends React.Component {
                     size='small'
                     >
                     <Modal.Content>
-                      <AddPOIModal show={this.state.poiModalOpen} selectedpoi={this.props.poiSelected} addPOI={this.hideModalAddItem} />
+                      <AddPOIModal show={this.state.poiModalOpen} selectedPOI={this.props.pointsSelected} addPOI={this.hideModalAddItem} />
                       <Modal.Actions>
                         <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
                       </Modal.Actions>
