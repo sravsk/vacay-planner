@@ -1,12 +1,16 @@
 import React from 'react';
 import axios from 'axios';
 import { Select, Button, Dropdown, Grid } from 'semantic-ui-react'
+import moment from 'moment';
+import TimePicker from 'rc-time-picker';
+const format12 = 'h:mm a';
 
 class AddPOIModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       poi: '',
+      time: moment().format('h:mm a'),
       latLng: {
         lat: 0,
         lng: 0
@@ -18,6 +22,15 @@ class AddPOIModal extends React.Component {
     this.setState({
       poi : value.value
     })
+  }
+
+  onTimeSelect (value) {
+    let newTime = moment(value, [format12]).format('h:mm a');
+   // let newTime = moment(value, [format12]).format('HHmm');
+  //  console.log(newTime);
+    this.setState({
+      time: newTime
+    });
   }
 
   render() {
@@ -42,7 +55,17 @@ class AddPOIModal extends React.Component {
           value={value}
           selection/>
         <br/><br/>
-        <Button onClick={(poi) => this.props.addPOI(this.state.poi)}>Submit</Button>
+        <TimePicker
+            showSecond={false}
+            defaultValue={moment()}
+            className="xxx"
+            onChange={this.onTimeSelect.bind(this)}
+            format={format12}
+            minuteStep={5}
+            use12Hours
+            inputReadOnly 
+        />
+        <Button onClick={(poi) => this.props.addPOI(this.state.poi, this.state.time)}>Submit</Button>
       </div>
     );
   }
