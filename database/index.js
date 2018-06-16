@@ -333,7 +333,7 @@ var dbHelpers = {
   },
 
   // add restaurant to a day of a particular trip
-  addItemToDay: (tripId, dayIndex, item, callback) => {
+  addItemToDay: (tripId, dayIndex, item, time, callback) => {
     Trip.findOne({where: {id: tripId}})
     .then(trip => {
       let itinerary = JSON.parse(trip.itinerary);
