@@ -2,60 +2,62 @@ import React from 'react';
 import {Grid, Button, Modal, Card, Icon, Image} from 'semantic-ui-react';
 import axios from 'axios';
 import AddRestModal from './AddRestModal.jsx';
+import AddPOIModal from './AddPOIModal.jsx';
 import moment from 'moment';
 
 class Itinerary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showRestModal: false,
       dayIndex: 0,
       itinerary: [],
-       modalOpen : false
+      modalOpen : false,
+      selectedTrip: 0,
+      poiModalOpen: false
     }
-    this.addRestaurant = this.addRestaurant.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
+    this.handlePOIOpen = this.handlePOIOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.hideModalAddItem = this.hideModalAddItem.bind(this);
   }
 
-  addRestaurant (selectedTrip, index, date) { // reference day by index
+  handleOpen(selectedTrip, index, date) { // reference day by index
     this.setState({
-      showRestModal: true,
-      dayIndex: index
+      modalOpen : true,
+      dayIndex: index,
+      selectedTrip: selectedTrip
     })
   }
 
-  hideModalAddRestaurant(restaurant, selectedTrip) {
+  handlePOIOpen(selectedTrip, index, date) { // reference day by index
     this.setState({
-      showRestModal: false
-    });
-    // add restaurant to card
-    // console.log('newRest', restaurant, selectedTrip, this.state.dateIndex)
-    // save restaurant in database in array corresponding to this day and trip
+      poiModalOpen : true,
+      dayIndex: index,
+      selectedTrip: selectedTrip
+    })
+  }
+
+  hideModalAddItem(item) {
     var params = {
-      restaurant: restaurant,
-      tripId: selectedTrip,
+      item: item,
+      tripId: this.state.selectedTrip,
       dayIndex: this.state.dayIndex
     };
-    axios.post('/addRestToDay', params)
+    // console.log('params to save in database', params);
+    axios.post('/addItemToDay', params)
     .then(result => {
       this.setState({
-        itinerary: result.data
+        itinerary: result.data,
+        modalOpen: false,
+        poiModalOpen: false
       })
-    })
-
-  }
-
-
-  handleOpen() {
-    this.setState({
-      modalOpen : true
     })
   }
 
   handleClose(){
     this.setState({
-      modalOpen : false
+      modalOpen : false,
+      poiModalOpen: false
     })
   }
 
@@ -86,21 +88,35 @@ class Itinerary extends React.Component {
                 {tripDetails}
               </Card.Header>
               <Card.Description>
+
                  <Modal
-                    trigger={ <Button onClick={this.handleOpen}>Add restaurant</Button>}
+                    trigger={ <Button onClick={() => this.handleOpen(this.props.selectedTrip, index, date)}>Add restaurant</Button>}
                     open={this.state.modalOpen}
                     onClose={this.handleClose}
                     size='small'
                     >
                     <Modal.Content>
-                      <AddRestModal show={this.state.showRestModal}  selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
+                      <AddRestModal show={this.state.modalOpen} selectedRestaurants={this.props.restaurantsSelected} addRest={this.hideModalAddItem} />
                       <Modal.Actions>
-                          <Button onClick={ (restaurant) => {this.hideModalAddRestaurant.bind(this) , this.props.selectedTrip} }>Submit</Button>
-                         <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
+                        <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
                       </Modal.Actions>
                     </Modal.Content>
                  </Modal>
-                <Button>Add point of interest</Button>
+
+                 <Modal
+                    trigger={ <Button onClick={() => this.handlePOIOpen(this.props.selectedTrip, index, date)}>Add point of interest</Button>}
+                    open={this.state.poiModalOpen}
+                    onClose={this.handleClose}
+                    size='small'
+                    >
+                    <Modal.Content>
+                      <AddPOIModal show={this.state.poiModalOpen} selectedPOI={this.props.pointsSelected} addPOI={this.hideModalAddItem} />
+                      <Modal.Actions>
+                        <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
+                      </Modal.Actions>
+                    </Modal.Content>
+                 </Modal>
+
               </Card.Description>
             </Card.Content>
           </Card>
@@ -117,8 +133,3 @@ class Itinerary extends React.Component {
 }
 
 export default Itinerary;
-
-
-// <Button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</Button><br/><br/>
-//                 <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
-//                 <Button>Add point of interest</Button>

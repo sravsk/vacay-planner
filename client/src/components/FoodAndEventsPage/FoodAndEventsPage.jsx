@@ -146,7 +146,6 @@ class FoodAndEventsPage extends React.Component {
     return (
       //Column width must add up to 16
       <Grid style={ {marginTop: 50} }>
-      <button onClick={() => console.log(this.state)}></button>
         <Grid.Row>
           <Grid.Column floated="right">
             <NavBar />

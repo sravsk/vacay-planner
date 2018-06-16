@@ -87,11 +87,21 @@ app.get('/events', (req, res) => {
 
 });
 
+app.get('/poisNew', (req, res) => {
+  var location = JSON.parse(req.query.latLng)
+  let lat = location.lat.replace(/\"/g,)
+  let lng = location.lng.replace(/\"/g,)
+  gp.getPOIs(lat, lng, (data) => {
+    res.status(200).send(JSON.parse(data));
+  })
+})
+
 app.get('/poi', (req, res) => {
   gp.getPOIs(req.query.latLng.lat, req.query.latLng.lng, (data) => {
     res.status(200).send(JSON.parse(data));
   })
 })
+
 
 // Get restaurants from Yelp API
 app.get('/restaurants/:location', (req, res) => {
@@ -105,7 +115,6 @@ app.get('/restaurants/:location', (req, res) => {
 app.get('/trips', (req, res) => {
   if (req.session.user !== null) {
     db.getUserTrips({email: req.session.user}, (obj) => {
-      console.log('TRIPOBJ inside /trips', obj)
       res.status(200).end(JSON.stringify(obj))
     })
   } else {
@@ -115,13 +124,11 @@ app.get('/trips', (req, res) => {
 
 app.get('/trips/:id', (req, res) => {
   db.getTripItems(req.params.id, (obj) => {
-    console.log('tripobj', obj)
     res.status(200).end(JSON.stringify(obj))
   });
 });
 
 app.post('/trips', (req, res) => {
-    console.log('REQBOD', req.body)
   if (req.session.user){
     db.newTrip(req.session.user, req.body)
     res.status(200).end('successfully added trip')
@@ -150,6 +157,13 @@ app.delete('/trips/:id/restaurants/:restaurantId', (req, res) => {
     res.status(200).end(JSON.stringify(obj))
   });
 })
+
+app.delete('/trips/:id/poi/:poiId', (req, res) => {
+  db.deletePoiID(req.params.id, req.params.poiId,  (obj) => {
+    res.status(200).end(JSON.stringify(obj))
+  });
+})
+
 
 app.post('/restaurants/:id', (req, res) => {
   db.updateTripRestaurant(req.params.id, req.body)
@@ -209,8 +223,8 @@ app.post('/signup', (req, res) => {
 })
 
 // add a restaurant to a day in the trip
-app.post('/addRestToDay', (req, res) => {
-  db.addRestaurantToDay(req.body.tripId, req.body.dayIndex, req.body.restaurant, function(itinerary) {
+app.post('/addItemToDay', (req, res) => {
+  db.addItemToDay(req.body.tripId, req.body.dayIndex, req.body.item, function(itinerary) {
     res.send(itinerary);
   })
 });
