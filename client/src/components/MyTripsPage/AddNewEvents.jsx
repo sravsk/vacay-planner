@@ -12,7 +12,6 @@ class AddNewEvents extends React.Component {
     }
 
     this.toggleFavorite = this.toggleFavorite.bind(this);
-    this.handleAddEvent = this.handleAddEvent.bind(this);
   }
 
   componentDidMount(){
@@ -26,25 +25,6 @@ class AddNewEvents extends React.Component {
         newEventFavorites.push(this.state.eventsList[listIndex]);
       }
       this.setState({ eventFavorites: newEventFavorites });
-  }
-
-  handleAddEvent(){
-    var tripId = this.props.selectedTrip;
-    var data = {
-      eventList: this.state.eventFavorites
-    };
-    $.ajax({
-      type : 'POST',
-      url : `/events/${tripId}`,
-      data : data,
-      success : (results) => {
-        console.log("new events added to trip", results)
-      },
-      error : (err) => {
-        console.log(err);
-      }
-    })
-
   }
 
   getEventsByLocationAndDate() {
@@ -66,10 +46,11 @@ class AddNewEvents extends React.Component {
   }
 
   render(){
+    console.log("state here", this.state)
     return(
         <div>
           <ListAllEvents eventsList={this.state.eventsList} eventFavorites={this.state.eventFavorites} toggleFavorite={this.toggleFavorite}/>
-           <Button color="blue" onClick={this.handleAddEvent}>Add to trip</Button>
+           <Button color="blue" onClick={(event) => this.props.handleAddEvent(this.state.eventFavorites)}>Add to trip</Button>
         </div>
       )
   }

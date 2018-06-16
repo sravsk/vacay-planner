@@ -13,7 +13,8 @@ class MyTripPageHeader extends React.Component{
       allTrips : this.props.allTrips,
       modalOpen : false,
       modalOpenRestaurant : false,
-      modalOpenPOI : false
+      modalOpenPOI : false,
+      eventsSelected : this.props.eventsSelected
     }
 
     this.handleTripDelete = this.handleTripDelete.bind(this);
@@ -23,6 +24,7 @@ class MyTripPageHeader extends React.Component{
     this.handleCloseRestaurant = this.handleCloseRestaurant.bind(this);
     this.handleOpenPOI = this.handleOpenPOI.bind(this);
     this.handleClosePOI = this.handleClosePOI.bind(this);
+    this.handleAddEvent = this.handleAddEvent.bind(this);
   }
 
   handleOpen() {
@@ -80,6 +82,28 @@ class MyTripPageHeader extends React.Component{
     })
   }
 
+  handleAddEvent(favEvents){
+    var tripId = this.props.selectedTrip;
+    var data = {
+      eventList: favEvents
+    };
+    console.log("data", data)
+    $.ajax({
+      type : 'POST',
+      url : `/events/${tripId}`,
+      data : data,
+      success : (results) => {
+        this.setState({
+          eventsSelected : results,
+          modalOpen : false
+        })
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    })
+  }
+
   render(){
       return (
         <div>
@@ -103,7 +127,7 @@ class MyTripPageHeader extends React.Component{
                         size='small'
                         >
                           <Modal.Content>
-                            <AddNewEvents startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} />
+                            <AddNewEvents startDate={trip.start_date} endDate={trip.end_date} loc={trip.loc} selectedTrip={this.props.selectedTrip} handleAddEvent={this.handleAddEvent}/>
                              <Button color='blue' onClick={this.handleClose} inverted>
                               Close
                               </Button>
