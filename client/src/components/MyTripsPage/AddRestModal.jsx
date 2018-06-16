@@ -1,6 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 import { Select, Button, Dropdown, Grid } from 'semantic-ui-react'
+//import 'rc-time-picker/assets/index.css';
+import moment from 'moment';
+import TimePicker from 'rc-time-picker';
+
+const format = 'h:mm a';
+
+const now = moment().hour(0).minute(0);
+
+function onTimeChange(value) {
+  console.log(value && value.format(format));
+}
 
 class AddRestModal extends React.Component {
   constructor(props) {
@@ -51,6 +62,15 @@ class AddRestModal extends React.Component {
           value={value}
           selection/>
         <br/><br/>
+          <TimePicker
+          showSecond={false}
+          defaultValue={now}
+          className="xxx"
+          onChange={onTimeChange}
+          format={format}
+          use12Hours
+          inputReadOnly
+        />
           {/*<Button onClick={ (restaurant) => {return this.props.handleSubmitSelection(this.state.restaurant, this.props.selectedTrip)} }>Submit</Button>*/}
           </div>
 
