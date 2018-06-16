@@ -194,7 +194,7 @@ var dbHelpers = {
         return output.restaurants = tripRestaurants
       }))
       .then(Restaurants => {
-        return POI.findAll({ where : {id : tripId}}).then(tripPOIs => output.poi = tripPOIs )
+        return POI.findAll({ where : {tripId : tripId}}).then(tripPOIs => output.poi = tripPOIs )
         })
       .then(trips => {
         console.log("output before sending to server", output)
