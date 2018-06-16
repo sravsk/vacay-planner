@@ -310,3 +310,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   margin-top: -40px;
   padding: 0px;
 }
+
+.ui.dimmer {
+background-color: rgba(0,0,0,0.3)!important;
+}
