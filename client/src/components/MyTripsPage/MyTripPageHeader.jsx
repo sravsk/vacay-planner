@@ -72,7 +72,7 @@ class MyTripPageHeader extends React.Component{
                 return(
                    <Grid key={index}>
                       <Grid.Row>
-                      <Grid.Column width={7}
+                      <Grid.Column width={5}
                       style={trip.id === this.props.selectedTrip ? {color: '#4183c4', fontSize : '24px', margin : '10px 0 20px 0'} : null}
                       key={trip.id}
                       >
@@ -110,7 +110,7 @@ class MyTripPageHeader extends React.Component{
                         </Modal>
                       </Grid.Column>
 
-                      <Grid.Column width={3}>
+                      <Grid.Column width={2}>
                       <Modal
                         trigger={<Button onClick={this.handleOpen} color="blue">Add POI</Button>}
                         open={this.state.modalOpen}

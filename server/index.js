@@ -88,7 +88,7 @@ app.get('/events', (req, res) => {
 });
 
 app.get('/poi', (req, res) => {
-  gp.getPOI(req.query.latLng.lat, req.query.latLng.lng, (data) => {
+  gp.getPOIs(req.query.latLng.lat, req.query.latLng.lng, (data) => {
     res.status(200).send(JSON.parse(data));
   })
 })
@@ -105,7 +105,7 @@ app.get('/restaurants/:location', (req, res) => {
 app.get('/trips', (req, res) => {
   if (req.session.user !== null) {
     db.getUserTrips({email: req.session.user}, (obj) => {
-      console.log('TRIPOBJ', obj)
+      console.log('TRIPOBJ inside /trips', obj)
       res.status(200).end(JSON.stringify(obj))
     })
   } else {
