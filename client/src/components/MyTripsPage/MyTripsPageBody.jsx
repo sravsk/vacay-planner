@@ -53,7 +53,6 @@ class MyTripsPageBody extends React.Component {
   }
 
   getTripDetailsById(tripId) {
-    // console.log('TRIPID', tripId)
     $.ajax({
       type: 'GET',
       url: `/trips/${tripId}`,
@@ -69,7 +68,7 @@ class MyTripsPageBody extends React.Component {
           startDate: data.startDate,
           endDate: data.endDate,
           itinerary: JSON.parse(data.itinerary)
-        });
+        })
         // if map container is already initialized, remove map
         if (this.mymap) {
           this.mymap.eachLayer(function(layer) {
@@ -112,19 +111,6 @@ class MyTripsPageBody extends React.Component {
             .bindPopup(`${event.name} at ${event.venueName}`);
         });
 
-        // marker for points of interest
-        var poiMarker = L.AwesomeMarkers.icon({
-          icon: 'star',
-          markerColor: 'orange'
-        });
-        // Add a marker for each point of interest
-        data.poi.forEach(poi => {
-          var poiLat = parseFloat(poi.latLng.lat);
-          var poiLng = parseFloat(poi.latLng.lng);
-          L.marker([poiLat, poiLng], {icon: poiMarker}).addTo(this.mymap)
-            .bindPopup(poi.name);
-        });
-
       }
     })
   }
@@ -141,7 +127,7 @@ class MyTripsPageBody extends React.Component {
               allTrips: data
             })
           this.updateSelection(this.state.selectedTrip);
-          // console.log('DATA', data);
+          console.log('DATA', data);
         }
       }
     })
@@ -188,14 +174,6 @@ class MyTripsPageBody extends React.Component {
                   <Accordion.Content active={activeIndex === 2}>
                     <p> </p>
                     {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected} selectedTrip = {this.state.selectedTrip}/>}
-                  </Accordion.Content>
-                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 3} index={3} onClick={this.handleClick.bind(this)}>
-                    <Icon name='dropdown'/>
-                    Saved Points of Interest
-                  </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 3}>
-                    <p> </p>
-                    {!this.state.pointsSelected.length ? <p>No Saved Points of Interest</p> : <POIList poiSelected={this.state.pointsSelected} selectedTrip = {this.state.selectedTrip}/>}
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>

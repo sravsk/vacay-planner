@@ -78,6 +78,8 @@ const Event = db.define('event', {
 const POI = db.define('poi', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   latLng: Sequelize.JSON,
+  //latLng: Sequelize.STRING,
+  //latLng: Sequelize.TEXT,
   name: {type: Sequelize.STRING, allowNull: false},
   rating: Sequelize.FLOAT
 });
@@ -196,7 +198,6 @@ var dbHelpers = {
         return POI.findAll({ where : {tripId : tripId}}).then(tripPOIs => output.poi = tripPOIs )
         })
       .then(trips => {
-        // console.log("output before sending to server", output)
         cb(output)
       })
     })
@@ -238,9 +239,9 @@ var dbHelpers = {
         tripName: obj.trip.name,
         loc: obj.trip.loc,
         latLng: JSON.stringify(obj.trip.latLng),
+        //latLng: obj.trip.latLng,
         itinerary: JSON.stringify(itinerary)
       }).then(trip => {
-        // console.log('OBJPOI', obj)
         //create the Events if they exist
         if (obj.eventList !== undefined) {
           obj.eventList.forEach(event => {
@@ -262,7 +263,6 @@ var dbHelpers = {
         //create the Restaurants if they exist
         if (obj.restaurantList !== undefined) {
           obj.restaurantList.forEach(restaurant => {
-            // console.log("Restaurant", Restaurant)
             var tempRest = Restaurant.build({
               name: restaurant.name,
               yelpURL: restaurant.url,
@@ -282,7 +282,6 @@ var dbHelpers = {
         //create the POI if they exist
         if (obj.poiList !== undefined) {
           obj.poiList.forEach(poi => {
-            // console.log('poi', poi)
             var tempPOI = POI.build({
               latLng: poi.geometry.location,
               name: poi.name,
@@ -382,14 +381,21 @@ var dbHelpers = {
     POI.findOne({where: {id: tripId}}).then(trip => {
       if (newPOI.poiList !== undefined) {
         newPOI.poiList.forEach(poi => {
+           var latitude = poi.geometry.location.lat.replace(/\"/g,)
+           var longitude = poi.geometry.location.lng.replace(/\"/g,)
+           var location = {
+            lat : latitude.replace(/\"/g,),
+            lng : longitude.replace(/\"/g,)
+           }
+           console.log("poi in db", JSON.stringify(poi.geometry.location))
           var tempPOI = POI.build({
-            name: poi.results.name,
-            latLng: poi.results.geometry.location,
-            rating: poi.results.rating
+            name: poi.name,
+            latLng: JSON.stringify(poi.geometry.location),
+            rating: poi.rating
           })
           tempPOI.setTrip(trip, {save: false});
           tempPOI.save();
-        })
+         })
       }
     })
   },
@@ -421,6 +427,21 @@ var dbHelpers = {
       return Restaurant.findAll({ where : { tripId : tripId}})
     }).then(restaurants => {
       cb(restaurants);
+    })
+  },
+
+    //this will delete a POI by id and pass the remaining restaurants for that trip to server
+  deletePoiID: (tripId, poiId, cb) => {
+    POI.findOne({where: {id: poiId}}).then(poi => {
+      return  poi.destroy({
+        where : {
+          id : poiId
+        }
+      })
+    }).then(deletedPOI => {
+      return POI.findAll({ where : { tripId : tripId}})
+    }).then(pois => {
+      cb(pois);
     })
   },
 

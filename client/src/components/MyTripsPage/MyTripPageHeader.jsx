@@ -12,7 +12,8 @@ class MyTripPageHeader extends React.Component{
     this.state = {
       allTrips : this.props.allTrips,
       modalOpen : false,
-      modalOpenRestaurant : false
+      modalOpenRestaurant : false,
+      modalOpenPOI : false
     }
 
     this.handleTripDelete = this.handleTripDelete.bind(this);
@@ -20,6 +21,8 @@ class MyTripPageHeader extends React.Component{
     this.handleClose = this.handleClose.bind(this);
     this.handleOpenRestaurant = this.handleOpenRestaurant.bind(this);
     this.handleCloseRestaurant = this.handleCloseRestaurant.bind(this);
+    this.handleOpenPOI = this.handleOpenPOI.bind(this);
+    this.handleClosePOI = this.handleClosePOI.bind(this);
   }
 
   handleOpen() {
@@ -34,7 +37,7 @@ class MyTripPageHeader extends React.Component{
     })
   }
 
-   handleOpenRestaurant() {
+  handleOpenRestaurant() {
     this.setState({
       modalOpenRestaurant : true
     })
@@ -43,6 +46,19 @@ class MyTripPageHeader extends React.Component{
   handleCloseRestaurant(){
     this.setState({
       modalOpenRestaurant : false
+    })
+  }
+
+
+  handleOpenPOI() {
+    this.setState({
+      modalOpenPOI : true
+    })
+  }
+
+  handleClosePOI(){
+    this.setState({
+      modalOpenPOI : false
     })
   }
 
@@ -112,14 +128,14 @@ class MyTripPageHeader extends React.Component{
 
                       <Grid.Column width={2}>
                       <Modal
-                        trigger={<Button onClick={this.handleOpen} color="blue">Add POI</Button>}
-                        open={this.state.modalOpen}
-                        onClose={this.handleClose}
+                        trigger={<Button onClick={this.handleOpenPOI} color="blue">Add POI</Button>}
+                        open={this.state.modalOpenPOI}
+                        onClose={this.handleClosePOI}
                         size='small'
                         >
                           <Modal.Content>
-                            <AddNewPOI startDate={trip.start_date} endDate={trip.end_date} loc={trip.latLng} selectedTrip={this.props.selectedTrip} />
-                             <Button color='blue' onClick={this.handleClose} inverted>
+                            <AddNewPOI startDate={trip.start_date} endDate={trip.end_date} latLng={trip.latLng} selectedTrip={this.props.selectedTrip} />
+                             <Button color='blue' onClick={this.handleClosePOI} inverted>
                               Close
                               </Button>
                           </Modal.Content>
