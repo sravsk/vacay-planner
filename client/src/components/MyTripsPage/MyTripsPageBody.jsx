@@ -27,6 +27,8 @@ class MyTripsPageBody extends React.Component {
       itinerary: []
     };
     this.updateSelection = this.updateSelection.bind(this);
+    this.handleDeleteEvent = this.handleDeleteEvent.bind(this);
+    this.handleDeleteRestaurant = this.handleDeleteRestaurant.bind(this);
   }
 
   componentDidMount() {
@@ -146,6 +148,38 @@ class MyTripsPageBody extends React.Component {
     })
   }
 
+  handleDeleteEvent(eventId){
+    $.ajax({
+      type : 'DELETE',
+      url : `trips/${this.state.selectedTrip}/events/${eventId}`,
+      success : (results) => {
+        this.setState({
+          eventsSelected : JSON.parse(results)
+        })
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+
+  handleDeleteRestaurant(restaurantId){
+    $.ajax({
+      type : 'DELETE',
+      url : `trips/${this.state.selectedTrip}/restaurants/${restaurantId}`,
+      success : (results) => {
+        this.setState({
+          restaurantsSelected : JSON.parse(results)
+        })
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+
   render() {
     const {activeIndex} = this.state;
     return (
@@ -184,7 +218,7 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 2}>
                     <p> </p>
-                    {!this.state.eventsSelected.length ? <p>No Saved Events</p> : <EventsList eventsSelected={this.state.eventsSelected} selectedTrip = {this.state.selectedTrip}/>}
+                    {!this.state.eventsSelected.length ? <p>No Saved Events</p> : <EventsList eventsSelected={this.state.eventsSelected} selectedTrip = {this.state.selectedTrip}handleDeleteEvent={this.handleDeleteEvent}/>}
                   </Accordion.Content>
                   <Accordion.Title style={ {color: '#d0021b', fontSize: 20} } active={activeIndex === 3} index={3} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown' />
@@ -192,7 +226,7 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
                     <p> </p>
-                    {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected} selectedTrip = {this.state.selectedTrip}/>}
+                    {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected} selectedTrip = {this.state.selectedTrip} handleDeleteRestaurant={this.handleDeleteRestaurant}/>}
                   </Accordion.Content>
                   <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 4} index={4} onClick={this.handleClick.bind(this)}>
                       <Icon name='dropdown'/>
