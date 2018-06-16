@@ -203,7 +203,7 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 4}>
                     <div> Trip Start Date: {moment(this.state.startDate).format("dddd, MMMM Do YYYY")}<br/> Trip End Date: {moment(this.state.endDate).format("dddd, MMMM Do YYYY")}<br/><br/>
-                    <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} /></div>
+                    <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} poiSelected={this.state.poiSelected} /></div>
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>
