@@ -5,42 +5,33 @@ import { Select, Button, Dropdown, Grid } from 'semantic-ui-react'
 class AddRestModal extends React.Component {
   constructor(props) {
     super(props);
-    let rest = this.props.selectedRestaurants[0];
     this.state = {
-      restaurant: `${rest.name}, ${rest.display_address}`,
-      dayIndex: this.props.dateIndex,
-      // latLng: {
-      //   lat: rest.restLat,
-      //   lng: rest.restLong
-      // }
+      restaurant: '',
+      latLng: {
+        lat: 0,
+        lng: 0
+      }
     }
   }
 
-  handleChange  (e, value) {
+  handleChange(e, value) {
    this.setState({
-   value : value.value
+   restaurant : value.value
      })
   }
 
   render() {
-    const  value  = this.state.restaurant
-
+    const  value  = this.state.restaurant;
     let restaurants = this.props.selectedRestaurants;
-
     var newSelection;
     let optionItems = restaurants.map((restaurant) => {
       return (
            newSelection = {
             text : restaurant.name + restaurant.display_address,
-            value : restaurant.name + restaurant.display_address,
-            id : restaurant.id,
-            image_url : restaurant.image_url,
-            tripId : restaurant.tripId
+            value : restaurant.name + restaurant.display_address
         }
       );
     });
-    console.log("state here", this.state)
-
     return (
       <div>
         <h4>Select Restaurant to add to Calendar</h4>
@@ -51,57 +42,10 @@ class AddRestModal extends React.Component {
           value={value}
           selection/>
         <br/><br/>
-          {/*<Button onClick={ (restaurant) => {return this.props.handleSubmitSelection(this.state.restaurant, this.props.selectedTrip)} }>Submit</Button>*/}
-          </div>
-
+        <Button onClick={(restaurant) => this.props.addRest(this.state.restaurant)}>Submit</Button>
+      </div>
     );
   }
 }
 
 export default AddRestModal;
-
-
-
-
-// class AddRestModal extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     let rest = this.props.selectedRestaurants[0];
-//     this.state = {
-//       restaurant: `${rest.name}, ${rest.display_address}`,
-//       dayIndex: this.props.dateIndex,
-//       // latLng: {
-//       //   lat: rest.restLat,
-//       //   lng: rest.restLong
-//       // }
-//     }
-//   }
-
-//   onChange(event) {
-//     this.setState({
-//       [event.target.name]: event.target.value
-//     });
-//   }
-
-//   render() {
-//     let showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
-//     let restaurants = this.props.selectedRestaurants;
-//     let optionItems = restaurants.map((restaurant) => {
-//       return (
-//         <option key={restaurant.id}>{restaurant.name}, {restaurant.display_address}</option>
-//       );
-//     });
-//     return (
-//       <div className={showHideClassName}>
-//       in modal component
-//         <div className="modal-main">
-//         <br/>
-//         <h4>Add restaurant: </h4><select name='restaurant' value={this.state.restaurant} onChange={this.onChange.bind(this)}>
-//           {optionItems}
-//         </select><br/><br/>
-//           <button className="btn" onClick={ (restaurant) => {return this.props.handleClose(this.state.restaurant, this.props.selectedTrip)} }>Submit</button>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
