@@ -111,6 +111,19 @@ class MyTripsPageBody extends React.Component {
             .bindPopup(`${event.name} at ${event.venueName}`);
         });
 
+        // marker for points of interest
+        var poiMarker = L.AwesomeMarkers.icon({
+          icon: 'star',
+          markerColor: 'orange'
+        });
+        // Add a marker for each point of interest
+        data.poi.forEach(poi => {
+          var poiLat = parseFloat(poi.latLng.lat);
+          var poiLng = parseFloat(poi.latLng.lng);
+          L.marker([poiLat, poiLng], {icon: poiMarker}).addTo(this.mymap)
+            .bindPopup(poi.name);
+        });
+
       }
     })
   }
@@ -149,31 +162,45 @@ class MyTripsPageBody extends React.Component {
             (
               <Grid.Column floated='right' width={13}>
               <MyTripPageHeader allTrips = {this.state.allTrips} selectedTrip = {this.state.selectedTrip}/>
-              <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} pointsSelected={this.state.pointsSelected} />
-              <br/>
-                <Accordion fluid styled>
+              <Accordion fluid styled>
                 <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
+                    <Icon name='dropdown'/>
+                    Itinerary
+                  </Accordion.Title>
+                  <Accordion.Content active={activeIndex === 0}>
+                    <p> </p>
+                    <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} pointsSelected={this.state.pointsSelected} />
+                  </Accordion.Content>
+                <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 1} index={1} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
                     Map
                   </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 0}>
+                  <Accordion.Content active={activeIndex === 1}>
                     <div id="map"></div>
                   </Accordion.Content>
-                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 1} index={1} onClick={this.handleClick.bind(this)}>
+                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 2} index={2} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown'/>
                     Saved Events
                   </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 1}>
+                  <Accordion.Content active={activeIndex === 2}>
                     <p> </p>
                     {!this.state.eventsSelected.length ? <p>No Saved Events</p> : <EventsList eventsSelected={this.state.eventsSelected} selectedTrip = {this.state.selectedTrip}/>}
                   </Accordion.Content>
-                  <Accordion.Title style={ {color: '#d0021b', fontSize: 20} } active={activeIndex === 2} index={2} onClick={this.handleClick.bind(this)}>
+                  <Accordion.Title style={ {color: '#d0021b', fontSize: 20} } active={activeIndex === 3} index={3} onClick={this.handleClick.bind(this)}>
                     <Icon name='dropdown' />
                     Saved Restaurants
                   </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 2}>
+                  <Accordion.Content active={activeIndex === 3}>
                     <p> </p>
                     {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected} selectedTrip = {this.state.selectedTrip}/>}
+                  </Accordion.Content>
+                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 4} index={4} onClick={this.handleClick.bind(this)}>
+                      <Icon name='dropdown'/>
+                      Saved Points of Interest
+                  </Accordion.Title>
+                  <Accordion.Content active={activeIndex === 4}>
+                    <p> </p>
+                    {!this.state.pointsSelected.length ? <p>No Saved Points of Interest</p> : <POIList poiSelected={this.state.pointsSelected} selectedTrip = {this.state.selectedTrip}/>}
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>
