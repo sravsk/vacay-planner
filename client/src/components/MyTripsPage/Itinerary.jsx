@@ -2,6 +2,7 @@ import React from 'react';
 import {Grid, Button, Modal, Card, Icon, Image} from 'semantic-ui-react';
 import axios from 'axios';
 import AddRestModal from './AddRestModal.jsx';
+import AddPOIModal from './AddPOIModal.jsx';
 import moment from 'moment';
 
 class Itinerary extends React.Component {
@@ -11,11 +12,12 @@ class Itinerary extends React.Component {
       dayIndex: 0,
       itinerary: [],
       modalOpen : false,
-      selectedTrip: 0
+      selectedTrip: 0,
+      poiModalOpen: false
     }
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.hideModalAddRestaurant = this.hideModalAddRestaurant.bind(this);
+    this.hideModalAddItem = this.hideModalAddItem.bind(this);
   }
 
   handleOpen(selectedTrip, index, date) { // reference day by index
@@ -26,25 +28,35 @@ class Itinerary extends React.Component {
     })
   }
 
-  hideModalAddRestaurant(restaurant) {
+  handlePOIOpen(selectedTrip, index, date) { // reference day by index
+    this.setState({
+      poiModalOpen : true,
+      dayIndex: index,
+      selectedTrip: selectedTrip
+    })
+  }
+
+  hideModalAddItem(item) {
     var params = {
-      restaurant: restaurant,
+      item: item,
       tripId: this.state.selectedTrip,
       dayIndex: this.state.dayIndex
     };
-    // console.log('params to save in database', params);
-    axios.post('/addRestToDay', params)
+    console.log('params to save in database', params);
+    axios.post('/addItemToDay', params)
     .then(result => {
       this.setState({
         itinerary: result.data,
-        modalOpen: false
+        modalOpen: false,
+        poiModalOpen: false
       })
     })
   }
 
   handleClose(){
     this.setState({
-      modalOpen : false
+      modalOpen : false,
+      poiModalOpen: false
     })
   }
 
@@ -83,7 +95,7 @@ class Itinerary extends React.Component {
                     size='small'
                     >
                     <Modal.Content>
-                      <AddRestModal show={this.state.modalOpen} selectedRestaurants={this.props.restaurantsSelected} addRest={this.hideModalAddRestaurant} />
+                      <AddRestModal show={this.state.modalOpen} selectedRestaurants={this.props.restaurantsSelected} addRest={this.hideModalAddItem} />
                       <Modal.Actions>
                        {/*} <Button onClick={(restaurant) => this.hideModalAddRestaurant(this.state.restaurant)}>Submit</Button> */}
                         <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
@@ -91,9 +103,19 @@ class Itinerary extends React.Component {
                     </Modal.Content>
                  </Modal>
 
-
-                <Button>Add point of interest</Button>
-
+                 <Modal
+                    trigger={ <Button onClick={() => this.handlePOIOpen(this.props.selectedTrip, index, date)}>Add point of interest</Button>}
+                    open={this.state.poiModalOpen}
+                    onClose={this.handleClose}
+                    size='small'
+                    >
+                    <Modal.Content>
+                      <AddPOIModal show={this.state.poiModalOpen} selectedpoi={this.props.poiSelected} addPOI={this.hideModalAddItem} />
+                      <Modal.Actions>
+                        <Button color='blue' onClick={this.handleClose} inverted>Close</Button>
+                      </Modal.Actions>
+                    </Modal.Content>
+                 </Modal>
 
               </Card.Description>
             </Card.Content>
@@ -111,8 +133,3 @@ class Itinerary extends React.Component {
 }
 
 export default Itinerary;
-
-
-// <Button onClick={() => this.addRestaurant(this.props.selectedTrip, index, date)}>Add restaurant</Button><br/><br/>
-//                 <AddRestModal show={this.state.showRestModal} handleClose={this.hideModalAddRestaurant.bind(this)} selectedTrip={this.props.selectedTrip} selectedRestaurants={this.props.restaurantsSelected} />
-//                 <Button>Add point of interest</Button>

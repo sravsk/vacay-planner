@@ -19,7 +19,6 @@ if (process.env.DATABASE_URL !== undefined) {
 }
 
 // Check for db connection
-
 db
   .authenticate()
   .then(() => {
@@ -335,12 +334,12 @@ var dbHelpers = {
   },
 
   // add restaurant to a day of a particular trip
-  addRestaurantToDay: (tripId, dayIndex, restaurant, callback) => {
+  addItemToDay: (tripId, dayIndex, item, callback) => {
     Trip.findOne({where: {id: tripId}})
     .then(trip => {
       let itinerary = JSON.parse(trip.itinerary);
       let key = Object.keys(itinerary[dayIndex])[0]
-      itinerary[dayIndex][key].push(restaurant);
+      itinerary[dayIndex][key].push(item);
       // save to trip
       // id, start date, end date, itinerary, etc.
       // itinerary.setTrip(trip, {save: false});
