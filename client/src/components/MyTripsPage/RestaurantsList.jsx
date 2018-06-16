@@ -12,22 +12,6 @@ class RestaurantsList extends React.Component {
     }
   }
 
-  handleDeleteRestaurant(restaurantId){
-    $.ajax({
-      type : 'DELETE',
-      url : `trips/${this.props.selectedTrip}/restaurants/${restaurantId}`,
-      success : (results) => {
-        this.setState({
-          restaurantsSelected : JSON.parse(results)
-        })
-        location.reload()
-      },
-      error : (err) => {
-        console.log(err);
-      }
-    })
-  }
-
   render(){
     return(
       <div style={{marginTop: -25}}>
@@ -64,7 +48,7 @@ class RestaurantsList extends React.Component {
                     <Icon name='food' fitted style={ {paddingLeft: 10}}/> {restaurant.categories.map(category => {
                       return category.title
                     }).join(', ')}
-                    <Button onClick={this.handleDeleteRestaurant.bind(this, restaurant.id)}>Delete Restaurant</Button>
+                     <Button onClick={(deletRest) => this.props.handleDeleteRestaurant(restaurant.id)}>Delete Restaurant</Button>
                   </Item.Extra>
                 </Item.Content>
               </Item>

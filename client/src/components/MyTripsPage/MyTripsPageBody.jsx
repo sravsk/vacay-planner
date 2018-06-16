@@ -28,6 +28,7 @@ class MyTripsPageBody extends React.Component {
     };
     this.updateSelection = this.updateSelection.bind(this);
     this.handleDeleteEvent = this.handleDeleteEvent.bind(this);
+    this.handleDeleteRestaurant = this.handleDeleteRestaurant.bind(this);
   }
 
   componentDidMount() {
@@ -162,6 +163,23 @@ class MyTripsPageBody extends React.Component {
     })
   }
 
+
+  handleDeleteRestaurant(restaurantId){
+    $.ajax({
+      type : 'DELETE',
+      url : `trips/${this.state.selectedTrip}/restaurants/${restaurantId}`,
+      success : (results) => {
+        this.setState({
+          restaurantsSelected : JSON.parse(results)
+        })
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+
   render() {
     const {activeIndex} = this.state;
     return (
@@ -208,7 +226,7 @@ class MyTripsPageBody extends React.Component {
                   </Accordion.Title>
                   <Accordion.Content active={activeIndex === 3}>
                     <p> </p>
-                    {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected} selectedTrip = {this.state.selectedTrip}/>}
+                    {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected} selectedTrip = {this.state.selectedTrip} handleDeleteRestaurant={this.handleDeleteRestaurant}/>}
                   </Accordion.Content>
                   <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 4} index={4} onClick={this.handleClick.bind(this)}>
                       <Icon name='dropdown'/>

@@ -45,7 +45,7 @@ class EventsList extends React.Component{
                       >
                         {moment(event.start_date).format('MMM DD ddd')}
                       </Label>
-                      <Button onClick={(deletEvent) => this.props.handleDeleteEvent(event.id)}>Delete Event {event.id}</Button>
+                      <Button onClick={(deletEvent) => this.props.handleDeleteEvent(event.id)}>Delete Event</Button>
                     </Item.Extra>
                   </Item.Content>
                 </Item>
