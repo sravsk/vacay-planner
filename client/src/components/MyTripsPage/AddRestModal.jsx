@@ -7,8 +7,6 @@ import TimePicker from 'rc-time-picker';
 
 const format = 'h:mm a';
 
-const now = moment().hour(0).minute(0);
-
 function onTimeChange(value) {
   console.log(value && value.format(format));
 }
@@ -64,10 +62,11 @@ class AddRestModal extends React.Component {
         <br/><br/>
           <TimePicker
           showSecond={false}
-          defaultValue={now}
+          defaultValue={moment()}
           className="xxx"
           onChange={onTimeChange}
           format={format}
+          minuteStep={5}
           use12Hours
           inputReadOnly
         />
