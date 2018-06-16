@@ -14,7 +14,8 @@ class MyTripPageHeader extends React.Component{
       modalOpen : false,
       modalOpenRestaurant : false,
       modalOpenPOI : false,
-      eventsSelected : this.props.eventsSelected
+      eventsSelected : this.props.eventsSelected,
+      restaurantSelected : this.props.restaurantSelected
     }
 
     this.handleTripDelete = this.handleTripDelete.bind(this);
@@ -25,6 +26,7 @@ class MyTripPageHeader extends React.Component{
     this.handleOpenPOI = this.handleOpenPOI.bind(this);
     this.handleClosePOI = this.handleClosePOI.bind(this);
     this.handleAddEvent = this.handleAddEvent.bind(this);
+    this.handleAddRestaurant = this.handleAddRestaurant.bind(this);
   }
 
   handleOpen() {
@@ -87,7 +89,6 @@ class MyTripPageHeader extends React.Component{
     var data = {
       eventList: favEvents
     };
-    console.log("data", data)
     $.ajax({
       type : 'POST',
       url : `/events/${tripId}`,
@@ -102,6 +103,28 @@ class MyTripPageHeader extends React.Component{
         console.log(err);
       }
     })
+  }
+
+  handleAddRestaurant(favFoods){
+    var tripId = this.props.selectedTrip;
+    var data = {
+      restaurantList: favFoods
+    };
+    $.ajax({
+      type : 'POST',
+      url : `/restaurants/${tripId}`,
+      data : data,
+      success : (results) => {
+        this.setState({
+         restaurantSelected  : results,
+          modalOpenRestaurant : false
+        })
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    })
+
   }
 
   render(){
@@ -142,7 +165,7 @@ class MyTripPageHeader extends React.Component{
                         size='small'
                         >
                           <Modal.Content>
-                            <AddNewRestaurants loc={trip.loc} selectedTrip={this.props.selectedTrip}  />
+                            <AddNewRestaurants loc={trip.loc} selectedTrip={this.props.selectedTrip} handleAddRestaurant={this.handleAddRestaurant}  />
                              <Button color='blue' onClick={this.handleCloseRestaurant} inverted>
                               Close
                               </Button>

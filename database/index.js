@@ -359,7 +359,7 @@ var dbHelpers = {
   },
 
   //this will add new restaurants to a trip by id
-  updateTripRestaurant: (tripId, newRestaurants) => {
+  updateTripRestaurant: (tripId, newRestaurants, cb) => {
     Trip.findOne({where: {id: tripId}}).then(trip => {
          if (newRestaurants.restaurantList !== undefined) {
           newRestaurants.restaurantList.forEach(restaurant => {
@@ -376,7 +376,12 @@ var dbHelpers = {
               image_url: restaurant.image_url
             })
             tempRest.setTrip(trip, {save: false});
-            tempRest.save();
+            tempRest.save().then(() => {
+              Trip.findOne({ where : { id : tripId}})
+              .then(restaurants => {
+                cb(trip.restaurantList)
+              })
+            })
           })
         }
     })
