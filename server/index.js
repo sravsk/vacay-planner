@@ -87,6 +87,15 @@ app.get('/events', (req, res) => {
 
 });
 
+app.get('/poisNew', (req, res) => {
+  var location = JSON.parse(req.query.latLng)
+  let lat = location.lat.replace(/\"/g,)
+  let lng = location.lng.replace(/\"/g,)
+  gp.getPOIs(lat, lng, (data) => {
+    res.status(200).send(JSON.parse(data));
+  })
+})
+
 app.get('/poi', (req, res) => {
   gp.getPOIs(req.query.latLng.lat, req.query.latLng.lng, (data) => {
     res.status(200).send(JSON.parse(data));

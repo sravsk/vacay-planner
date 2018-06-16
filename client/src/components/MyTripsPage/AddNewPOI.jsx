@@ -10,7 +10,6 @@ class AddNewPOI extends React.Component {
       poiList : [],
       poiFavorites: []
     }
-    console.log(this.props.poiFavorites)
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.handleAddPOI = this.handleAddPOI.bind(this);
   }
@@ -50,14 +49,14 @@ class AddNewPOI extends React.Component {
   getPOIByLocation() {
     $.ajax({
       type: 'GET',
-      url: '/poi/',
+     url: '/poisNew',
       data: {
         latLng: this.props.latLng
       },
-      success: result => {
+      success: data => {
         this.setState({
-          poiList: result.businesses
-        });
+          poiList: data.results
+        })
       }
     });
   }
@@ -74,3 +73,4 @@ class AddNewPOI extends React.Component {
 
 
 export default AddNewPOI;
+

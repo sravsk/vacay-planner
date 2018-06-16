@@ -78,6 +78,8 @@ const Event = db.define('event', {
 const POI = db.define('poi', {
   id: { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true },
   latLng: Sequelize.JSON,
+  //latLng: Sequelize.STRING,
+  //latLng: Sequelize.TEXT,
   name: {type: Sequelize.STRING, allowNull: false},
   rating: Sequelize.FLOAT
 });
@@ -237,6 +239,7 @@ var dbHelpers = {
         tripName: obj.trip.name,
         loc: obj.trip.loc,
         latLng: JSON.stringify(obj.trip.latLng),
+        //latLng: obj.trip.latLng,
         itinerary: JSON.stringify(itinerary)
       }).then(trip => {
         //create the Events if they exist
@@ -378,14 +381,21 @@ var dbHelpers = {
     POI.findOne({where: {id: tripId}}).then(trip => {
       if (newPOI.poiList !== undefined) {
         newPOI.poiList.forEach(poi => {
+           var latitude = poi.geometry.location.lat.replace(/\"/g,)
+           var longitude = poi.geometry.location.lng.replace(/\"/g,)
+           var location = {
+            lat : latitude.replace(/\"/g,),
+            lng : longitude.replace(/\"/g,)
+           }
+           console.log("poi in db", JSON.stringify(poi.geometry.location))
           var tempPOI = POI.build({
-            name: poi.results.name,
-            latLng: poi.results.geometry.location,
-            rating: poi.results.rating
+            name: poi.name,
+            latLng: JSON.stringify(poi.geometry.location),
+            rating: poi.rating
           })
           tempPOI.setTrip(trip, {save: false});
           tempPOI.save();
-        })
+         })
       }
     })
   },
