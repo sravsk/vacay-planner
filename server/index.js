@@ -226,7 +226,7 @@ app.post('/signup', (req, res) => {
 
 // add a restaurant to a day in the trip
 app.post('/addItemToDay', (req, res) => {
-  db.addItemToDay(req.body.tripId, req.body.dayIndex, req.body.item, function(itinerary) {
+  db.addItemToDay(req.body.tripId, req.body.dayIndex, req.body.item, req.body.time, function(itinerary) {
     res.send(itinerary);
   })
 });
