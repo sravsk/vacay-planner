@@ -60,7 +60,6 @@ class MyTripsPageBody extends React.Component {
       success: result => {
         var data = JSON.parse(result)
         // console.log('trip details', data)
-        console.log('tripdata', data)
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,
@@ -70,8 +69,7 @@ class MyTripsPageBody extends React.Component {
           startDate: data.startDate,
           endDate: data.endDate,
           itinerary: JSON.parse(data.itinerary)
-        })
-        console.log('trip details', this.state)
+        });
         // if map container is already initialized, remove map
         if (this.mymap) {
           this.mymap.eachLayer(function(layer) {
@@ -112,6 +110,19 @@ class MyTripsPageBody extends React.Component {
         data.events.forEach(event => {
           L.marker([event.venueLat, event.venueLong], {icon: eventMarker}).addTo(this.mymap)
             .bindPopup(`${event.name} at ${event.venueName}`);
+        });
+
+        // marker for points of interest
+        var poiMarker = L.AwesomeMarkers.icon({
+          icon: 'star',
+          markerColor: 'orange'
+        });
+        // Add a marker for each point of interest
+        data.poi.forEach(poi => {
+          var poiLat = parseFloat(poi.latLng.lat);
+          var poiLng = parseFloat(poi.latLng.lng);
+          L.marker([poiLat, poiLng], {icon: poiMarker}).addTo(this.mymap)
+            .bindPopup(poi.name);
         });
 
       }
