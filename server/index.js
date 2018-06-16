@@ -142,8 +142,9 @@ app.delete('/trips/:id', (req, res) => {
 })
 
 app.post('/events/:id', (req, res) => {
-  db.updateTripEvent(req.params.id, req.body)
-  res.status(200).end('added new events to trip');
+  db.updateTripEvent(req.params.id, req.body, (obj) => {
+     res.send(obj);
+   })
 })
 
 app.delete('/trips/:id/events/:eventId', (req, res) => {
@@ -166,8 +167,9 @@ app.delete('/trips/:id/poi/:poiId', (req, res) => {
 
 
 app.post('/restaurants/:id', (req, res) => {
-  db.updateTripRestaurant(req.params.id, req.body)
-  res.status(200).end('added new restaurants to trip');
+  db.updateTripRestaurant(req.params.id, req.body, (obj) => {
+    res.send(obj);
+  })
 })
 
 app.post('/poi/:id', (req, res) => {

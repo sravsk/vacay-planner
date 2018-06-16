@@ -12,7 +12,6 @@ class AddNewRestaurants  extends React.Component {
     }
 
     this.toggleFavorite = this.toggleFavorite.bind(this);
-    this.handleAddRestaurant = this.handleAddRestaurant.bind(this);
   }
 
   componentDidMount(){
@@ -28,24 +27,7 @@ class AddNewRestaurants  extends React.Component {
       this.setState({ foodFavorites: newFoodFavorites });
   }
 
-  handleAddRestaurant(){
-    var tripId = this.props.selectedTrip;
-    var data = {
-      restaurantList: this.state.foodFavorites
-    };
-    $.ajax({
-      type : 'POST',
-      url : `/restaurants/${tripId}`,
-      data : data,
-      success : (results) => {
-        console.log("new restaurants added to trip", results)
-      },
-      error : (err) => {
-        console.log(err);
-      }
-    })
 
-  }
 
   getRestaurantsByLocation() {
     $.ajax({
@@ -63,7 +45,7 @@ class AddNewRestaurants  extends React.Component {
     return(
         <div>
           <ListAllRestaurants restaurantList={this.state.restaurantList} foodFavorites={this.state.foodFavorites} toggleFavorite={this.toggleFavorite}/>
-           <Button color="blue" onClick={this.handleAddRestaurant}>Add to trip</Button>
+           <Button color="blue" onClick={(restaurants) => this.props.handleAddRestaurant(this.state.foodFavorites)}>Add to trip</Button>
         </div>
       )
   }
