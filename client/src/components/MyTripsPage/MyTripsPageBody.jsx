@@ -18,7 +18,7 @@ class MyTripsPageBody extends React.Component {
       allTrips: [],
       eventsSelected: [],
       restaurantsSelected: [],
-      poiSelected: [],
+      pointsSelected: [],
       activeIndex: null,
       loc: '',
       latLng: {},
@@ -58,10 +58,11 @@ class MyTripsPageBody extends React.Component {
       url: `/trips/${tripId}`,
       success: result => {
         var data = JSON.parse(result)
+        // console.log('trip details in MyTripsPageBody', data)
         this.setState({
           eventsSelected: data.events,
           restaurantsSelected: data.restaurants,
-          poiSelected: data.poi,
+          pointsSelected: data.poi,
           loc: data.loc,
           latLng: JSON.parse(data.latLng),
           startDate: data.startDate,
@@ -148,7 +149,7 @@ class MyTripsPageBody extends React.Component {
             (
               <Grid.Column floated='right' width={13}>
               <MyTripPageHeader allTrips = {this.state.allTrips} selectedTrip = {this.state.selectedTrip}/>
-              <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} />
+              <Itinerary itinerary={this.state.itinerary} selectedTrip={this.state.selectedTrip} restaurantsSelected={this.state.restaurantsSelected} eventsSelected={this.state.eventsSelected} pointsSelected={this.state.pointsSelected} />
               <br/>
                 <Accordion fluid styled>
                 <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 0} index={0} onClick={this.handleClick.bind(this)}>
@@ -173,14 +174,6 @@ class MyTripsPageBody extends React.Component {
                   <Accordion.Content active={activeIndex === 2}>
                     <p> </p>
                     {!this.state.restaurantsSelected.length ? <p>No Saved Restaurants</p> : <RestaurantsList restaurantsSelected={this.state.restaurantsSelected} selectedTrip = {this.state.selectedTrip}/>}
-                  </Accordion.Content>
-                  <Accordion.Title style={ { color: '#d0021b', fontSize: 20} } active={activeIndex === 3} index={3} onClick={this.handleClick.bind(this)}>
-                    <Icon name='dropdown'/>
-                    Saved Points of Interest
-                  </Accordion.Title>
-                  <Accordion.Content active={activeIndex === 3}>
-                    <p> </p>
-                    {!this.state.poiSelected.length ? <p>No Saved Points of Interest</p> : <POIList poiSelected={this.state.poiSelected} selectedTrip = {this.state.selectedTrip}/>}
                   </Accordion.Content>
                 </Accordion>
               </Grid.Column>
